@@ -10,6 +10,7 @@ program
   .description("CLI para gerar uma estrutura de API em Node.js com Express")
   .argument("[nome-do-projeto]", "Nome do projeto")
   .option("-f, --force", "Sobrescrever diretório se já existir", false)
+  .option("-r, --root", "Criar template na raiz do projeto", false)
   .action(async (projectName, options) => {
     console.log(chalk.blue.bold("🚀 Express API Generator"));
 

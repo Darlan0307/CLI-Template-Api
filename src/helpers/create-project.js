@@ -7,9 +7,13 @@ import { createDirectoryStructure } from "./create-directory-structure.js";
 import { createFiles } from "./create-files.js";
 
 export async function createProject(projectName, options) {
-  const projectPath = path.join(process.cwd(), projectName);
+  const projectPath = options.root
+    ? path.join(process.cwd())
+    : path.join(process.cwd(), projectName);
 
-  if (fs.existsSync(projectPath)) {
+  console.log(projectPath);
+
+  if (fs.existsSync(projectPath) && !options.root) {
     if (options.force) {
       console.log(
         chalk.yellow(`Diretório ${projectName} já existe. Sobrescrevendo...`)

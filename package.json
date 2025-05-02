@@ -12,7 +12,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "dev": "node src/main.js"
+    "dev": "node src/main.js",
+    "dev:root": "node src/main.js -r"
   },
   "keywords": [],
   "author": "",
