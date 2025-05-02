@@ -1,0 +1,20 @@
+{
+  "type": "module",
+  "name": "cli-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.js",
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "inquirer": "^12.6.0",
+    "ora": "^8.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "dev": "node src/main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
