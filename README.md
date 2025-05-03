@@ -1,4 +1,4 @@
-![Logo do projeto](https://i.imgur.com/kniMQHu.png)
+<!-- ![Logo do projeto](https://i.imgur.com/kniMQHu.png) -->
 
 # 🚀 Api Boilerplate
 
@@ -8,11 +8,24 @@ Esse projeto é uma CLI para gerar rapidamente boilerplate de APIs em Node.js, E
 
 > OBS: Ainda está em desenvolvimento
 
-## ✨ Funcionalidades Principais
+### 📥 Exemplo de Uso
 
-## 📥 Instalação
+```bash
+npx @darlan0307/api-boilerplate <nome-do-projeto>
+```
 
-## ⚙️ Exemplo de Uso
+ou, após instalar globalmente:
+
+```bash
+npm install -g @darlan0307/api-boilerplate
+api-boilerplate <nome-do-projeto>
+```
+
+### ✨ Flags
+
+- **-f, --force**: Sobrescrever diretório se já existir.
+
+- **-r, --root**: Criar template na raiz do projeto, se não for informado o template da api será criado dentro de uma pasta com o nome do projeto.
 
 ### 🏛️ Arquitetura
 
@@ -37,10 +50,10 @@ Esse projeto é uma CLI para gerar rapidamente boilerplate de APIs em Node.js, E
 └── tsconfig.json
 ```
 
-- **@types**: Tipagens globais adicionais de bibliotecas como o express.
 - **main.ts**: É o ponto de entrada da aplicação, onde as configurações são carregadas, as classes são instanciadas e a API é iniciada.
 - **infra**: Agrupa recursos essenciais ao funcionamento do sistema, mas que não fazem parte do domínio de negócios.
 - **shared**: Reúne classes e funções genéricas, independentes de qualquer modelo específico, que podem ser reutilizadas em diversos pontos da aplicação
+- **@types**: Tipagens globais adicionais de bibliotecas como o express.
 
 ## 📦 Tecnologia usada:
 
