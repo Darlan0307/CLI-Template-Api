@@ -6,16 +6,13 @@ export async function createDirectoryStructure(projectPath, options) {
     fs.mkdirSync(projectPath);
   }
 
-  // Criar subdiretórios
   const directories = [
     "src",
-    "src/controllers",
-    "src/models",
-    "src/routes",
-    "src/middlewares",
-    "src/config",
-    "src/utils",
-    "tests",
+    "src/@types",
+    "src/@types/express",
+    "src/app",
+    "src/infra",
+    "src/shared",
   ];
 
   directories.forEach((dir) => {

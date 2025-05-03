@@ -1,53 +1,98 @@
 export function generateReadme(projectName) {
-  return `# ${projectName}
+  return `
+  ![Logo do projeto](https://i.imgur.com/kniMQHu.png)
 
-API REST desenvolvida com Node.js e Express.
+# ${projectName}
 
-## Início rápido
+Uma breve descrição do projeto aqui.
 
-\`\`\`bash
-# Instalar dependências
-npm install
+## 🔥 Introdução
 
-# Executar em modo de desenvolvimento
-npm run dev
+Coloque aqui as instruções e quais são os objetivos desse projeto, funcionalidades.
 
-# Executar em modo de produção
-npm start
-\`\`\`
+### ⚙️ Pré-requisitos
 
-## Estrutura do projeto
+Coloque aqui passo a passo que precisa para instalar o projeto e como instalá-lo.
 
 \`\`\`
-src/
-  ├── controllers/  # Controladores da aplicação
-  ├── models/       # Modelos de dados
-  ├── routes/       # Rotas da API
-  ├── middlewares/  # Middlewares personalizados
-  ├── config/       # Configurações da aplicação
-  ├── utils/        # Funções utilitárias
-  ├── app.js        # Configuração do Express
-  └── server.js     # Ponto de entrada da aplicação
+Pode inserir exemplos.
 \`\`\`
 
-## Documentação da API
+### 🔨 Guia de instalação
 
-### Endpoints
+Explique aqui um passo a passo mostrando como deve executar para ter um ambiente de desenvolvimento em execução, desde instalar e rodar o projeto.
 
-- \`GET /api/examples\`: Retorna todos os exemplos
-- \`GET /api/examples/:id\`: Retorna um exemplo específico
-- \`POST /api/examples\`: Cria um novo exemplo
-- \`PUT /api/examples/:id\`: Atualiza um exemplo existente
-- \`DELETE /api/examples/:id\`: Remove um exemplo existente
+Etapas para instalar:
 
-## Scripts disponíveis
+Passo 1:
 
-- \`npm start\`: Inicia o servidor em modo de produção
-- \`npm run dev\`: Inicia o servidor em modo de desenvolvimento com hot-reload
-- \`npm test\`: Executa os testes
+\`\`\`
+Codigo, exemplos
+\`\`\`
 
-## Licença
+Passo 2:
 
-MIT
-`;
+\`\`\`
+Codigo, exemplos
+\`\`\`
+
+## 🛠️ Executando os testes (caso tenha testes)
+
+Explique como executar os testes automatizados para este sistema.
+
+\`\`\`
+Coloque exemplos
+\`\`\`
+
+## 📦 Tecnologias usadas:
+
+Coloque aqui as ferramentas que você usou para criar seu projeto, exemplo:
+
+- ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+- ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+- ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+
+* Link para pegar as badges: https://github.com/Ileriayo/markdown-badges
+
+Ou pode separar por stacks:
+
+**Front-end:**
+
+- [React JS](https://react.dev/)
+- [TailwindCSS](https://tailwindcss.com/)
+
+**Back-end:**
+
+- [NodeJS](https://nodejs.org/).
+- [TypeScript](https://www.typescriptlang.org/)
+- [Mongo DB](https://mongodb.com/)
+
+## 👷 Autores
+
+Mencione todos aqueles que ajudaram a levantar o projeto desde o seu início, colaboradores.
+
+- **Nome do dev** - _Função realizada_ - [nome_do_dev](https://github.com/link_do_Perfil)
+- **Sujeito Programador** - _Frontend do projeto_ - [@sujeitoprogramador](https://github.com/devfraga)
+
+## 📄 Licença
+
+Esse projeto está sob a licença (nome da licença) - acesse os detalhes [LICENSE.md](https://github.com/link_da_licenca).
+
+## 💭 FAQ - Perguntas frequentes
+
+#### Questão 1
+
+Resposta 1
+
+#### Questão 2
+
+Resposta 2
+
+## 💡 Expressões de gratidão
+
+- Um agradecimento publicamente.
+- Para suporte, mande um email para nome@teste.com.
+- Link para o seu linkedin [Meu linkedin](https://www.linkedin.com/in/darlan-martins-8a7956259/)
+
+  `;
 }

@@ -11,8 +11,6 @@ export async function createProject(projectName, options) {
     ? path.join(process.cwd())
     : path.join(process.cwd(), projectName);
 
-  console.log(projectPath);
-
   if (fs.existsSync(projectPath) && !options.root) {
     if (options.force) {
       console.log(
@@ -46,19 +44,24 @@ export async function createProject(projectName, options) {
     console.log("\n📁 Estrutura do projeto:");
     console.log(chalk.cyan(`${projectName}/`));
     console.log(chalk.cyan(`├── src/`));
-    console.log(chalk.cyan(`│   ├── controllers/`));
-    console.log(chalk.cyan(`│   ├── models/`));
-    console.log(chalk.cyan(`│   ├── routes/`));
-    console.log(chalk.cyan(`│   ├── middlewares/`));
-    console.log(chalk.cyan(`│   ├── config/`));
-    console.log(chalk.cyan(`│   └── utils/`));
+    console.log(chalk.cyan(`│   ├── @types/`));
+    console.log(chalk.cyan(`│   ├── app/`));
+    console.log(chalk.cyan(`│   ├── infra/`));
+    console.log(chalk.cyan(`│   ├── shared/`));
+    console.log(chalk.cyan(`│   ├── http-server.ts`));
+    console.log(chalk.cyan(`│   └── main.ts`));
     console.log(chalk.cyan(`├── .env`));
+    console.log(chalk.cyan(`├── .env.example`));
     console.log(chalk.cyan(`├── .gitignore`));
     console.log(chalk.cyan(`├── package.json`));
+    console.log(chalk.cyan(`├── tsconfig.json`));
+    console.log(chalk.cyan(`├── tsconfig.build.json`));
     console.log(chalk.cyan(`└── README.md`));
 
     console.log("\n🚀 Para iniciar o projeto:");
-    console.log(chalk.yellow(`cd ${projectName}`));
+    if (!options.root) {
+      console.log(chalk.yellow(`cd ${projectName}`));
+    }
     console.log(chalk.yellow(`npm install`));
     console.log(chalk.yellow(`npm run dev`));
   } catch (error) {
