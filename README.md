@@ -1,6 +1,6 @@
 ![Logo do projeto](https://i.imgur.com/kniMQHu.png)
 
-# Express Api Generator
+# 🚀 Api Boilerplate
 
 ## 🔥 Introdução
 

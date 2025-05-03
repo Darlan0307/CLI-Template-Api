@@ -1,9 +1,12 @@
 {
   "type": "module",
-  "name": "cli-template",
+  "name": "@darlan0307/api-boilerplate",
   "version": "1.0.0",
-  "description": "",
+  "description": "CLI para gerar boilerplate de APIs em Node.js",
   "main": "src/main.js",
+  "bin": {
+    "api-boilerplate": "src/main.js"
+  },
   "dependencies": {
     "chalk": "^5.4.1",
     "commander": "^13.1.0",
@@ -15,7 +18,22 @@
     "dev": "node src/main.js",
     "dev:root": "node src/main.js -r"
   },
-  "keywords": [],
-  "author": "",
+  "homepage": "https://github.com/Darlan0307/CLI-Template-Api",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Darlan0307/CLI-Template-Api"
+  },
+  "keywords": [
+    "cli",
+    "scaffold",
+    "api",
+    "nodejs",
+    "express",
+    "javascript",
+    "typescript",
+    "boilerplate",
+    "template"
+  ],
+  "author": "Darlan Martins <darlanchagas2020@gmail.com>",
   "license": "ISC"
 }

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { program } from "commander";
 import chalk from "chalk";
 import inquirer from "inquirer";
@@ -12,7 +14,7 @@ program
   .option("-f, --force", "Sobrescrever diretório se já existir", false)
   .option("-r, --root", "Criar template na raiz do projeto", false)
   .action(async (projectName, options) => {
-    console.log(chalk.blue.bold("🚀 Express API Generator"));
+    console.log(chalk.blue.bold("🚀 Api Boilerplate"));
 
     if (!projectName) {
       const answers = await inquirer.prompt([
