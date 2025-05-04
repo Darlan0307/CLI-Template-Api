@@ -4,7 +4,7 @@
 
 ## 🔥 Introdução
 
-Esse projeto é uma CLI para gerar rapidamente boilerplate de APIs em Node.js, Express e TypeScript com configurações prontas de lint, testes, docker, cache e etc.
+Esse projeto é uma CLI para gerar rapidamente boilerplate de APIs em Node.js, Express e TypeScript com configurações prontas de lint, testes, docker, cache e etc. [página no npm](https://www.npmjs.com/package/@darlan0307/api-boilerplate)
 
 > OBS: Ainda está em desenvolvimento
 
@@ -25,9 +25,9 @@ api-boilerplate <nome-do-projeto>
 
 - **-f, --force**: Sobrescrever diretório se já existir.
 
-- **-r, --root**: Criar template na raiz do projeto, se não for informado o template da api será criado dentro de uma pasta com o nome do projeto.
-
 - **-t, --tests**: Preparar o ambiente para os testes unitários. Até o momento a CLI pode configurar o ambiente para testes com o [vitest](https://vitest.dev/), [jest](https://jestjs.io/pt-BR/) e o [test runner](https://nodejs.org/api/test.html#test-runner) (nativo do nodejs)
+
+- **-r, --root**: Criar template na raiz do projeto, se não for informado o template da api será criado dentro de uma pasta com o nome do projeto.
 
 ### 🏛️ Arquitetura
 
