@@ -1,11 +1,10 @@
 #!/usr/bin/env node
-
 import { program } from "commander";
-import chalk from "chalk";
-import inquirer from "inquirer";
-import { createProject } from "./helpers/create-project.js";
+import { createProject } from "./core/create-project.js";
+import { promptProjectName, promptTestOptions } from "./cli/prompts/prompts.js";
+import { logger } from "./utils/logger.js";
 
-const version = "1.0.3";
+const version = "1.0.5";
 
 program
   .version(version)
@@ -15,53 +14,33 @@ program
   .option("-r, --root", "Criar template na raiz do projeto", false)
   .option("-t, --tests", "Criar ambiente de testes", false)
   .action(async (projectName, options) => {
-    console.log(chalk.blue.bold("🚀 Api Boilerplate"));
+    logger.info("🚀 Api Boilerplate");
 
-    if (!projectName) {
-      const answers = await inquirer.prompt([
-        {
-          type: "input",
-          name: "projectName",
-          message: "Nome do projeto:",
-          default: "express-api",
-          validate: (input) => {
-            if (input.trim() === "") return "O nome do projeto é obrigatório";
-            return true;
-          },
-        },
-      ]);
-      projectName = answers.projectName;
+    try {
+      if (!projectName) {
+        projectName = await promptProjectName();
+      }
+
+      let testOptions = {};
+      if (!options.tests) {
+        testOptions = await promptTestOptions();
+      }
+
+      const projectOptions = {
+        ...options,
+        tests: options.tests || testOptions.enableTests,
+        typeTest:
+          testOptions.testLibrary ||
+          (options.tests
+            ? await promptTestOptions(true).then((res) => res.testLibrary)
+            : false),
+      };
+
+      await createProject(projectName, projectOptions);
+    } catch (error) {
+      logger.error(`Erro: ${error.message}`);
+      process.exit(1);
     }
-    let resultTestPrompt = null;
-    if (!options?.tests) {
-      resultTestPrompt = await inquirer.prompt({
-        type: "confirm",
-        name: "tests",
-        message: "A sua aplicação terá testes unitários?",
-        default: options.tests,
-      });
-    }
-
-    let resultSelectedTypeTest = null;
-    if (resultTestPrompt?.tests || options?.tests) {
-      resultSelectedTypeTest = await inquirer.prompt([
-        {
-          type: "list",
-          name: "typeTest",
-          message: "Qual biblioteca de testes você quer usar?",
-          default: "vitest",
-          choices: ["vitest", "jest", "test runner (nativo do nodejs)"],
-        },
-      ]);
-    }
-
-    const projectOptions = {
-      ...options,
-      tests: resultTestPrompt?.tests ?? options.tests,
-      typeTest: resultSelectedTypeTest?.typeTest ?? false,
-    };
-
-    await createProject(projectName, projectOptions);
   });
 
 program.parse(process.argv);

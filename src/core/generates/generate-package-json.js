@@ -1,5 +1,5 @@
 export function generatePackageJson(projectName, options) {
-  const typeTest = options.typeTest;
+  const { tests, typeTest } = options;
 
   const dependencies = {
     compression: "^1.7.5",
@@ -23,17 +23,30 @@ export function generatePackageJson(projectName, options) {
     "ts-node-dev": "2.0.0",
   };
 
-  if (options.tests) {
-    if (typeTest === "vitest") {
-      devDependencies["vitest"] = "3.1.2";
-      devDependencies["vite-tsconfig-paths"] = "5.1.4";
-    } else if (typeTest === "jest") {
-      devDependencies["ts-jest"] = "^29.3.2";
-      devDependencies["jest"] = "^29.7.0";
-      devDependencies["@types/jest"] = "^29.5.14";
-    } else {
-      devDependencies["ts-node"] = "^10.9.2";
+  if (tests) {
+    switch (typeTest) {
+      case "vitest":
+        devDependencies["vitest"] = "3.1.2";
+        devDependencies["vite-tsconfig-paths"] = "5.1.4";
+        break;
+      case "jest":
+        devDependencies["ts-jest"] = "^29.3.2";
+        devDependencies["jest"] = "^29.7.0";
+        devDependencies["@types/jest"] = "^29.5.14";
+        break;
+      default:
+        devDependencies["ts-node"] = "^10.9.2";
     }
+  }
+
+  function getTestScript(type) {
+    const map = {
+      vitest: "vitest run --config vitest.unit.config.mjs",
+      jest: "jest",
+      default:
+        "node -r ts-node/register -r tsconfig-paths/register --test 'src/**/*.spec.ts'",
+    };
+    return map[type] || map.default;
   }
 
   const scripts = {
@@ -43,18 +56,8 @@ export function generatePackageJson(projectName, options) {
       "rimraf dist && tsc --project tsconfig.build.json && resolve-tspaths",
   };
 
-  if (options.tests) {
-    let valueScript = "";
-    if (typeTest === "vitest") {
-      valueScript = "vitest run --config vitest.unit.config.mjs";
-    } else if (typeTest === "jest") {
-      valueScript = "jest";
-    } else {
-      valueScript =
-        "node -r ts-node/register -r tsconfig-paths/register --test ./**/*.spec.ts";
-    }
-
-    scripts["test:unit"] = valueScript;
+  if (tests) {
+    scripts["test:unit"] = getTestScript(typeTest);
   }
 
   return {

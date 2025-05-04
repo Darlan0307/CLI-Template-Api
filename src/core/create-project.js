@@ -1,10 +1,11 @@
 import fs from "fs";
 import path from "path";
-import chalk from "chalk";
 import inquirer from "inquirer";
 import ora from "ora";
+import chalk from "chalk";
 import { createDirectoryStructure } from "./create-directory-structure.js";
 import { createFiles } from "./create-files.js";
+import { logger } from "../utils/logger.js";
 
 export async function createProject(projectName, options) {
   const projectPath = options.root
@@ -13,9 +14,7 @@ export async function createProject(projectName, options) {
 
   if (fs.existsSync(projectPath) && !options.root) {
     if (options.force) {
-      console.log(
-        chalk.yellow(`Diretório ${projectName} já existe. Sobrescrevendo...`)
-      );
+      logger.warn(`Diretório ${projectName} já existe. Sobrescrevendo...`);
     } else {
       const { overwrite } = await inquirer.prompt([
         {
@@ -27,7 +26,7 @@ export async function createProject(projectName, options) {
       ]);
 
       if (!overwrite) {
-        console.log(chalk.red("Operação cancelada."));
+        logger.error("Operação cancelada.");
         return;
       }
     }
@@ -42,31 +41,33 @@ export async function createProject(projectName, options) {
     spinner.succeed(chalk.green("Estrutura do projeto criada com sucesso!"));
 
     console.log("\n📁 Estrutura do projeto:");
-    console.log(chalk.cyan(`${projectName}/`));
-    console.log(chalk.cyan(`├── src/`));
-    console.log(chalk.cyan(`│   ├── @types/`));
-    console.log(chalk.cyan(`│   ├── app/`));
-    console.log(chalk.cyan(`│   ├── infra/`));
-    console.log(chalk.cyan(`│   ├── shared/`));
+
+    logger.infoFolders(`${projectName}/`);
+    logger.infoFolders(`├── src/`);
+    logger.infoFolders(`│   ├── @types/`);
+    logger.infoFolders(`│   ├── app/`);
+    logger.infoFolders(`│   ├── infra/`);
+    logger.infoFolders(`│   ├── shared/`);
     if (options.tests) {
-      console.log(chalk.cyan(`│   ├── tests/`));
+      logger.infoFolders(`│   ├── tests/`);
     }
-    console.log(chalk.cyan(`│   ├── http-server.ts`));
-    console.log(chalk.cyan(`│   └── main.ts`));
-    console.log(chalk.cyan(`├── .env`));
-    console.log(chalk.cyan(`├── .env.example`));
-    console.log(chalk.cyan(`├── .gitignore`));
-    console.log(chalk.cyan(`├── package.json`));
-    console.log(chalk.cyan(`├── tsconfig.json`));
-    console.log(chalk.cyan(`├── tsconfig.build.json`));
-    console.log(chalk.cyan(`└── README.md`));
+    logger.infoFolders(`│   ├── http-server.ts`);
+    logger.infoFolders(`│   └── main.t`);
+    logger.infoFolders(`├── .env`);
+    logger.infoFolders(`├── .env.example`);
+    logger.infoFolders(`├── .gitignore`);
+    logger.infoFolders(`├── package.json`);
+    logger.infoFolders(`├── tsconfig.json`);
+    logger.infoFolders(`├── tsconfig.build.json`);
+    logger.infoFolders(`└── README.md`);
 
     console.log("\n🚀 Para iniciar o projeto:");
     if (!options.root) {
-      console.log(chalk.yellow(`cd ${projectName}`));
+      logger.warn(`cd ${projectName}`);
     }
-    console.log(chalk.yellow(`npm install`));
-    console.log(chalk.yellow(`npm run dev`));
+
+    logger.warn(`npm install`);
+    logger.warn(`npm run dev`);
   } catch (error) {
     spinner.fail(chalk.red(`Erro ao criar projeto: ${error.message}`));
     process.exit(1);
