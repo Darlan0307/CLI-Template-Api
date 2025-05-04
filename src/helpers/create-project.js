@@ -59,11 +59,6 @@ export async function createProject(projectName, options) {
     console.log(chalk.cyan(`├── package.json`));
     console.log(chalk.cyan(`├── tsconfig.json`));
     console.log(chalk.cyan(`├── tsconfig.build.json`));
-
-    if (options.tests) {
-      console.log(chalk.cyan(`├── vitest.unit.config.mjs`));
-    }
-
     console.log(chalk.cyan(`└── README.md`));
 
     console.log("\n🚀 Para iniciar o projeto:");

@@ -1,4 +1,6 @@
 export function generatePackageJson(projectName, options) {
+  const typeTest = options.typeTest;
+
   const dependencies = {
     compression: "^1.7.5",
     cors: "^2.8.5",
@@ -22,8 +24,16 @@ export function generatePackageJson(projectName, options) {
   };
 
   if (options.tests) {
-    devDependencies["vitest"] = "3.1.2";
-    devDependencies["vite-tsconfig-paths"] = "5.1.4";
+    if (typeTest === "vitest") {
+      devDependencies["vitest"] = "3.1.2";
+      devDependencies["vite-tsconfig-paths"] = "5.1.4";
+    } else if (typeTest === "jest") {
+      devDependencies["ts-jest"] = "^29.3.2";
+      devDependencies["jest"] = "^29.7.0";
+      devDependencies["@types/jest"] = "^29.5.14";
+    } else {
+      devDependencies["ts-node"] = "^10.9.2";
+    }
   }
 
   const scripts = {
@@ -32,8 +42,19 @@ export function generatePackageJson(projectName, options) {
     build:
       "rimraf dist && tsc --project tsconfig.build.json && resolve-tspaths",
   };
+
   if (options.tests) {
-    scripts["test:unit"] = "vitest run --config vitest.unit.config.mjs";
+    let valueScript = "";
+    if (typeTest === "vitest") {
+      valueScript = "vitest run --config vitest.unit.config.mjs";
+    } else if (typeTest === "jest") {
+      valueScript = "jest";
+    } else {
+      valueScript =
+        "node -r ts-node/register -r tsconfig-paths/register --test ./**/*.spec.ts";
+    }
+
+    scripts["test:unit"] = valueScript;
   }
 
   return {

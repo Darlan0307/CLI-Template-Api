@@ -32,8 +32,8 @@ program
       ]);
       projectName = answers.projectName;
     }
-    let resultTestPrompt;
-    if (!options.tests) {
+    let resultTestPrompt = null;
+    if (!options?.tests) {
       resultTestPrompt = await inquirer.prompt({
         type: "confirm",
         name: "tests",
@@ -42,20 +42,23 @@ program
       });
     }
 
-    // Configurações adicionais via prompt
-    // const answers = await inquirer.prompt([
-    //   {
-    //     type: "list",
-    //     name: "database",
-    //     message: "Qual banco de dados você deseja utilizar?",
-    //     default: options.database,
-    //     choices: ["mongodb", "mysql", "postgresql", "nenhum"],
-    //   },
-    // ]);
+    let resultSelectedTypeTest = null;
+    if (resultTestPrompt?.tests || options?.tests) {
+      resultSelectedTypeTest = await inquirer.prompt([
+        {
+          type: "list",
+          name: "typeTest",
+          message: "Qual biblioteca de testes você quer usar?",
+          default: "vitest",
+          choices: ["vitest", "jest", "test runner (nativo do nodejs)"],
+        },
+      ]);
+    }
 
     const projectOptions = {
       ...options,
       tests: resultTestPrompt?.tests ?? options.tests,
+      typeTest: resultSelectedTypeTest?.typeTest ?? false,
     };
 
     await createProject(projectName, projectOptions);

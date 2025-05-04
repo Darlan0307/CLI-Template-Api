@@ -27,7 +27,7 @@ api-boilerplate <nome-do-projeto>
 
 - **-r, --root**: Criar template na raiz do projeto, se não for informado o template da api será criado dentro de uma pasta com o nome do projeto.
 
-- **-t, --tests**: Preparar o ambiente para os testes unitários.
+- **-t, --tests**: Preparar o ambiente para os testes unitários. Até o momento a CLI pode configurar o ambiente para testes com o [vitest](https://vitest.dev/), [jest](https://jestjs.io/pt-BR/) e o [test runner](https://nodejs.org/api/test.html#test-runner) (nativo do nodejs)
 
 ### 🏛️ Arquitetura
 

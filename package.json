@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@darlan0307/api-boilerplate",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "CLI para gerar boilerplate de APIs em Node.js",
   "main": "src/main.js",
   "bin": {

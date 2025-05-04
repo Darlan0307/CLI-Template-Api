@@ -9,8 +9,9 @@ export function generateTsConfigJson(isBuild) {
 
   return {
     compilerOptions: {
-      target: "es2019",
+      target: "ES2022",
       module: "commonjs",
+      lib: ["ES2022"],
       esModuleInterop: true,
       forceConsistentCasingInFileNames: true,
       strict: true,

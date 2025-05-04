@@ -8,8 +8,11 @@ import { generateTsConfigJson } from "./generates/generate-tsconfig-json.js";
 import { generateMainFile } from "./generates/generate-main-file.js";
 import { generateHttpServerFile } from "./generates/generate-http-server-file.js";
 import { generateLoggerFile } from "./generates/generate-logger-file.js";
-import { generateVitestUnitConfig } from "./generates/generate-vitest-unit-config.js";
-import { generateExampleTestUnit } from "./generates/generate-example-test-unit.js";
+import {
+  generateExampleTestUnit,
+  generateExampleSumTest,
+  generateConfigTest,
+} from "./generates/generate-example-test-unit.js";
 
 export async function createFiles(projectPath, projectName, options) {
   const packageJsonContent = generatePackageJson(projectName, options);
@@ -60,18 +63,24 @@ export async function createFiles(projectPath, projectName, options) {
   );
 
   if (options.tests) {
-    fs.writeFileSync(
-      path.join(projectPath, "vitest.unit.config.mjs"),
-      generateVitestUnitConfig()
-    );
-
+    const typeTest = options.typeTest;
     fs.writeFileSync(
       path.join(projectPath, "src", "tests", "example-test", "sum.ts"),
-      generateExampleTestUnit()
+      generateExampleSumTest()
     );
     fs.writeFileSync(
       path.join(projectPath, "src", "tests", "example-test", "sum.spec.ts"),
-      generateExampleTestUnit(true)
+      generateExampleTestUnit(typeTest)
     );
+
+    if (typeTest === "vitest" || typeTest === "jest") {
+      const nameFileConfigTest =
+        typeTest === "vitest" ? "vitest.unit.config.mjs" : "jest.config.json";
+
+      fs.writeFileSync(
+        path.join(projectPath, nameFileConfigTest),
+        generateConfigTest(typeTest)
+      );
+    }
   }
 }
