@@ -13,7 +13,7 @@ export default class HttpServer {
     this.app = express();
   }
 
-  async createApp(port: number): Promise<Express> {
+  async createApp(): Promise<Express> {
     this.loadMiddlewares();
     this.loadRoutes();
     return this.app;

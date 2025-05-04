@@ -1,5 +1,5 @@
 export function generatePackageJson(projectName, options) {
-  const { tests, typeTest } = options;
+  const { lint, tests, typeTest } = options;
 
   const dependencies = {
     compression: "^1.7.5",
@@ -22,6 +22,14 @@ export function generatePackageJson(projectName, options) {
     rimraf: "^6.0.1",
     "ts-node-dev": "2.0.0",
   };
+
+  if (lint) {
+    devDependencies["@eslint/js"] = "^9.26.0";
+    devDependencies["eslint"] = "^9.26.0";
+    devDependencies["typescript-eslint"] = "^8.31.1";
+    devDependencies["globals"] = "^16.0.0";
+    devDependencies["prettier"] = "^3.5.3";
+  }
 
   if (tests) {
     switch (typeTest) {
@@ -55,6 +63,13 @@ export function generatePackageJson(projectName, options) {
     build:
       "rimraf dist && tsc --project tsconfig.build.json && resolve-tspaths",
   };
+
+  if (lint) {
+    scripts["lint"] = "eslint .";
+    scripts["lint:fix"] = "eslint . --fix";
+    scripts["format"] =
+      'prettier --write "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}"';
+  }
 
   if (tests) {
     scripts["test:unit"] = getTestScript(typeTest);

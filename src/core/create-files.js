@@ -9,6 +9,10 @@ import { generateMainFile } from "./generates/generate-main-file.js";
 import { generateHttpServerFile } from "./generates/generate-http-server-file.js";
 import { generateLoggerFile } from "./generates/generate-logger-file.js";
 import {
+  generateConfigEslint,
+  generateConfigPrettier,
+} from "./generates/generate-config-lint.js";
+import {
   generateExampleTestUnit,
   generateExampleSumTest,
   generateConfigTest,
@@ -61,6 +65,17 @@ export async function createFiles(projectPath, projectName, options) {
     path.join(projectPath, "src", "infra", "logger.ts"),
     generateLoggerFile()
   );
+
+  if (options.lint) {
+    fs.writeFileSync(
+      path.join(projectPath, "eslint.config.mjs"),
+      generateConfigEslint()
+    );
+    fs.writeFileSync(
+      path.join(projectPath, ".prettierrc"),
+      generateConfigPrettier()
+    );
+  }
 
   if (options.tests) {
     const typeTest = options.typeTest;

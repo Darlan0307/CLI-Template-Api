@@ -47,3 +47,24 @@ export async function promptTestOptions(skipEnableQuestion = false) {
 
   return result;
 }
+
+export async function promptEslintAndPrettier(skipEnableQuestion = false) {
+  let result = {
+    eslintAndPrettier: true,
+  };
+
+  if (skipEnableQuestion) return result;
+
+  const answers = await inquirer.prompt([
+    {
+      type: "confirm",
+      name: "eslintAndPrettier",
+      message: "Configurar o eslint e o prettier?",
+      default: false,
+    },
+  ]);
+
+  result.eslintAndPrettier = answers.eslintAndPrettier;
+
+  return result;
+}

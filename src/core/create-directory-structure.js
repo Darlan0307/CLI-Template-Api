@@ -7,6 +7,7 @@ export async function createDirectoryStructure(projectPath, options) {
   }
 
   const directories = [
+    "logs",
     "src",
     "src/@types",
     "src/@types/express",

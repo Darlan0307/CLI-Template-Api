@@ -30,7 +30,7 @@ async function main() {
       })
     );
 
-    const app = await httpServer.createApp(port);
+    const app = await httpServer.createApp();
 
     app.listen(port, () => logger.info(\`Running on port \$\{port\}\`));
   } catch (error) {
