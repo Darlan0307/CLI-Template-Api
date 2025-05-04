@@ -48,6 +48,9 @@ export async function createProject(projectName, options) {
     console.log(chalk.cyan(`│   ├── app/`));
     console.log(chalk.cyan(`│   ├── infra/`));
     console.log(chalk.cyan(`│   ├── shared/`));
+    if (options.tests) {
+      console.log(chalk.cyan(`│   ├── tests/`));
+    }
     console.log(chalk.cyan(`│   ├── http-server.ts`));
     console.log(chalk.cyan(`│   └── main.ts`));
     console.log(chalk.cyan(`├── .env`));
@@ -56,6 +59,11 @@ export async function createProject(projectName, options) {
     console.log(chalk.cyan(`├── package.json`));
     console.log(chalk.cyan(`├── tsconfig.json`));
     console.log(chalk.cyan(`├── tsconfig.build.json`));
+
+    if (options.tests) {
+      console.log(chalk.cyan(`├── vitest.unit.config.mjs`));
+    }
+
     console.log(chalk.cyan(`└── README.md`));
 
     console.log("\n🚀 Para iniciar o projeto:");

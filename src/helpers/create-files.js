@@ -8,6 +8,8 @@ import { generateTsConfigJson } from "./generates/generate-tsconfig-json.js";
 import { generateMainFile } from "./generates/generate-main-file.js";
 import { generateHttpServerFile } from "./generates/generate-http-server-file.js";
 import { generateLoggerFile } from "./generates/generate-logger-file.js";
+import { generateVitestUnitConfig } from "./generates/generate-vitest-unit-config.js";
+import { generateExampleTestUnit } from "./generates/generate-example-test-unit.js";
 
 export async function createFiles(projectPath, projectName, options) {
   const packageJsonContent = generatePackageJson(projectName, options);
@@ -56,4 +58,20 @@ export async function createFiles(projectPath, projectName, options) {
     path.join(projectPath, "src", "infra", "logger.ts"),
     generateLoggerFile()
   );
+
+  if (options.tests) {
+    fs.writeFileSync(
+      path.join(projectPath, "vitest.unit.config.mjs"),
+      generateVitestUnitConfig()
+    );
+
+    fs.writeFileSync(
+      path.join(projectPath, "src", "tests", "example-test", "sum.ts"),
+      generateExampleTestUnit()
+    );
+    fs.writeFileSync(
+      path.join(projectPath, "src", "tests", "example-test", "sum.spec.ts"),
+      generateExampleTestUnit(true)
+    );
+  }
 }

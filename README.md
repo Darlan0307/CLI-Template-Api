@@ -27,6 +27,8 @@ api-boilerplate <nome-do-projeto>
 
 - **-r, --root**: Criar template na raiz do projeto, se não for informado o template da api será criado dentro de uma pasta com o nome do projeto.
 
+- **-t, --tests**: Preparar o ambiente para os testes unitários.
+
 ### 🏛️ Arquitetura
 
 ```
@@ -35,6 +37,8 @@ api-boilerplate <nome-do-projeto>
 │   │   └── express
 │   ├── app
 │   ├── infra
+|   |   ├── errors
+|   |   ├── middlewares
 │   │   └── logger.ts
 │   ├── shared
 │   ├── http-server.ts

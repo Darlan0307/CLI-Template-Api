@@ -5,7 +5,7 @@ import chalk from "chalk";
 import inquirer from "inquirer";
 import { createProject } from "./helpers/create-project.js";
 
-const version = "1.0.0";
+const version = "1.0.3";
 
 program
   .version(version)
@@ -13,6 +13,7 @@ program
   .argument("[nome-do-projeto]", "Nome do projeto")
   .option("-f, --force", "Sobrescrever diretório se já existir", false)
   .option("-r, --root", "Criar template na raiz do projeto", false)
+  .option("-t, --tests", "Criar ambiente de testes", false)
   .action(async (projectName, options) => {
     console.log(chalk.blue.bold("🚀 Api Boilerplate"));
 
@@ -31,6 +32,15 @@ program
       ]);
       projectName = answers.projectName;
     }
+    let resultTestPrompt;
+    if (!options.tests) {
+      resultTestPrompt = await inquirer.prompt({
+        type: "confirm",
+        name: "tests",
+        message: "A sua aplicação terá testes unitários?",
+        default: options.tests,
+      });
+    }
 
     // Configurações adicionais via prompt
     // const answers = await inquirer.prompt([
@@ -41,29 +51,13 @@ program
     //     default: options.database,
     //     choices: ["mongodb", "mysql", "postgresql", "nenhum"],
     //   },
-    //   {
-    //     type: "confirm",
-    //     name: "auth",
-    //     message: "Incluir autenticação JWT?",
-    //     default: options.auth,
-    //   },
-    //   {
-    //     type: "confirm",
-    //     name: "typescript",
-    //     message: "Usar TypeScript?",
-    //     default: options.typescript,
-    //   },
     // ]);
 
-    // Mesclar opções da linha de comando com respostas do prompt
     const projectOptions = {
       ...options,
-      // database: answers.database,
-      // auth: answers.auth,
-      // typescript: answers.typescript,
+      tests: resultTestPrompt?.tests ?? options.tests,
     };
 
-    // Criar estrutura do projeto
     await createProject(projectName, projectOptions);
   });
 
