@@ -15,6 +15,18 @@ export async function promptProjectName() {
   return answers.projectName;
 }
 
+export async function promptStackProject() {
+  const answers = await inquirer.prompt({
+    type: "list",
+    name: "stack",
+    message: "Qual framework você deseja usar?",
+    default: "Express",
+    choices: ["Express", "Fastify", "Hono"],
+  });
+
+  return answers.stack.toLowerCase();
+}
+
 export async function promptTestOptions(skipEnableQuestion = false) {
   let result = {};
 
@@ -59,7 +71,7 @@ export async function promptEslintAndPrettier(skipEnableQuestion = false) {
     {
       type: "confirm",
       name: "eslintAndPrettier",
-      message: "Configurar o eslint e o prettier?",
+      message: "Você gostaria de usar o eslint e o prettier?",
       default: false,
     },
   ]);

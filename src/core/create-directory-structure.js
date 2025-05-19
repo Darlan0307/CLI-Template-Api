@@ -10,7 +10,6 @@ export async function createDirectoryStructure(projectPath, options) {
     "logs",
     "src",
     "src/@types",
-    "src/@types/express",
     "src/app",
     "src/infra",
     "src/infra/errors",

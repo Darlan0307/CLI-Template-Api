@@ -5,6 +5,7 @@ import {
   promptProjectName,
   promptTestOptions,
   promptEslintAndPrettier,
+  promptStackProject,
 } from "./cli/prompts/prompts.js";
 import { logger } from "./utils/logger.js";
 
@@ -26,6 +27,8 @@ program
         projectName = await promptProjectName();
       }
 
+      let stackName = await promptStackProject();
+
       let eslintAndPrettierOption = {};
       if (!options.lint) {
         eslintAndPrettierOption = await promptEslintAndPrettier();
@@ -38,6 +41,7 @@ program
 
       const projectOptions = {
         ...options,
+        stack: stackName,
         tests: options.tests || testOptions.enableTests,
         lint: options.lint || eslintAndPrettierOption.eslintAndPrettier,
         typeTest:

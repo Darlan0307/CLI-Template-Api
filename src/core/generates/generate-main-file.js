@@ -1,4 +1,4 @@
-export function generateMainFile() {
+export function generateMainFile(options) {
   return `
   import { logger } from "@infra/logger";
 import HttpServer from "./http-server";
@@ -32,7 +32,11 @@ async function main() {
 
     const app = await httpServer.createApp();
 
-    app.listen(port, () => logger.info(\`Running on port \$\{port\}\`));
+    ${
+      options.stack === "express"
+        ? "app.listen(port, () => logger.info(`Running on port ${port}`));"
+        : " app.listen({port},() => logger.info(`Running on port ${port}`))"
+    }
   } catch (error) {
     logger.error(\`App exited with error: \$\{error\}\`);
     process.exit(ExitStatus.Failure);

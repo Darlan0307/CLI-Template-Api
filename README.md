@@ -36,7 +36,6 @@ api-boilerplate <nome-do-projeto>
 ```
 ├── src
 │   ├── @types
-│   │   └── express
 │   ├── app
 │   ├── infra
 |   |   ├── errors
@@ -59,7 +58,7 @@ api-boilerplate <nome-do-projeto>
 - **main.ts**: É o ponto de entrada da aplicação, onde as configurações são carregadas, as classes são instanciadas e a API é iniciada.
 - **infra**: Agrupa recursos essenciais ao funcionamento do sistema, mas que não fazem parte do domínio de negócios.
 - **shared**: Reúne classes e funções genéricas, independentes de qualquer modelo específico, que podem ser reutilizadas em diversos pontos da aplicação
-- **@types**: Tipagens globais adicionais de bibliotecas como o express.
+- **@types**: Tipagens globais adicionais de bibliotecas/frameworks como o express, fastify e etc.
 
 ## 📦 Tecnologia usada:
 

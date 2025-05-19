@@ -1,11 +1,7 @@
 export function generatePackageJson(projectName, options) {
-  const { lint, tests, typeTest } = options;
+  const { lint, tests, typeTest, stack } = options;
 
   const dependencies = {
-    compression: "^1.7.5",
-    cors: "^2.8.5",
-    express: "^5.1.0",
-    helmet: "^8.0.0",
     pino: "^9.5.0",
     "pino-pretty": "^13.0.0",
     "tsconfig-paths": "^4.2.0",
@@ -14,14 +10,35 @@ export function generatePackageJson(projectName, options) {
   };
 
   const devDependencies = {
-    "@types/compression": "^1.7.5",
-    "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.1",
     "@types/node": "^22.15.3",
     typescript: "^5.6.3",
     rimraf: "^6.0.1",
     "ts-node-dev": "2.0.0",
   };
+
+  switch (stack) {
+    case "express":
+      dependencies["express"] = "^5.1.0";
+      dependencies["compression"] = "^1.7.5";
+      dependencies["cors"] = "^2.8.5";
+      dependencies["helmet"] = "^8.0.0";
+      devDependencies["@types/compression"] = "^1.7.5";
+      devDependencies["@types/cors"] = "^2.8.17";
+      devDependencies["@types/express"] = "^5.0.1";
+      break;
+    case "fastify":
+      dependencies["fastify"] = "^5.3.3";
+      dependencies["@fastify/cors"] = "^11.0.1";
+      dependencies["@fastify/helmet"] = "^13.0.1";
+      dependencies["@fastify/compress"] = "^8.0.1";
+      break;
+    case "hono":
+      dependencies["hono"] = "";
+      dependencies["@hono/node-server"] = "";
+      break;
+    default:
+      break;
+  }
 
   if (lint) {
     devDependencies["@eslint/js"] = "^9.26.0";
@@ -44,6 +61,7 @@ export function generatePackageJson(projectName, options) {
         break;
       default:
         devDependencies["ts-node"] = "^10.9.2";
+        break;
     }
   }
 
@@ -81,7 +99,7 @@ export function generatePackageJson(projectName, options) {
     description: "API gerada com api boilerplate",
     main: "dist/src/main.js",
     scripts,
-    keywords: ["express", "api", "nodejs"],
+    keywords: ["api", "nodejs"],
     author: "",
     license: "MIT",
     dependencies,

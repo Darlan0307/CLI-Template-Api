@@ -6,7 +6,10 @@ import { generateReadme } from "./generates/generate-readme.js";
 import { generateEnvFile } from "./generates/generate-env.js";
 import { generateTsConfigJson } from "./generates/generate-tsconfig-json.js";
 import { generateMainFile } from "./generates/generate-main-file.js";
-import { generateHttpServerFile } from "./generates/generate-http-server-file.js";
+import {
+  generateExpressHttpServerFile,
+  generateFastifyHttpServerFile,
+} from "./generates/generate-http-server-file.js";
 import { generateLoggerFile } from "./generates/generate-logger-file.js";
 import {
   generateConfigEslint,
@@ -51,14 +54,18 @@ export async function createFiles(projectPath, projectName, options) {
     generateReadme(projectName)
   );
 
-  fs.writeFileSync(
-    path.join(projectPath, "src", "http-server.ts"),
-    generateHttpServerFile()
-  );
+  const pathFileHttpServer = path.join(projectPath, "src", "http-server.ts");
+  if (options.stack === "express") {
+    fs.writeFileSync(pathFileHttpServer, generateExpressHttpServerFile());
+  } else if (options.stack === "fastify") {
+    fs.writeFileSync(pathFileHttpServer, generateFastifyHttpServerFile());
+  } else {
+    fs.writeFileSync(pathFileHttpServer, generateFastifyHttpServerFile());
+  }
 
   fs.writeFileSync(
     path.join(projectPath, "src", "main.ts"),
-    generateMainFile()
+    generateMainFile(options)
   );
 
   fs.writeFileSync(
