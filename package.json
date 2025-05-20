@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@darlan0307/api-boilerplate",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "CLI para gerar boilerplate de APIs em Node.js",
   "main": "src/main.js",
   "bin": {
@@ -15,8 +15,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "dev": "node src/main.js",
-    "dev:root": "node src/main.js -r"
+    "dev": "node src/main.js"
   },
   "homepage": "https://github.com/Darlan0307/CLI-Template-Api",
   "repository": {
@@ -29,6 +28,8 @@
     "api",
     "nodejs",
     "express",
+    "fastify",
+    "hono",
     "javascript",
     "typescript",
     "boilerplate",
