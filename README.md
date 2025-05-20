@@ -4,9 +4,12 @@
 
 ## 🔥 Introdução
 
-Esse projeto é uma CLI para gerar rapidamente boilerplate de APIs em Node.js, Express e TypeScript com configurações prontas de lint, testes, docker, cache e etc. [página no npm](https://www.npmjs.com/package/@darlan0307/api-boilerplate)
+Esse projeto é uma CLI para gerar rapidamente boilerplate de APIs em Node.js,com configurações prontas de lint,typeScript, testes, docker e etc. [Página no NPM.](https://www.npmjs.com/package/@darlan0307/api-boilerplate)
+Frameworks que você pode escolher para o projeto:
 
-> OBS: Ainda está em desenvolvimento
+- [Express](https://expressjs.com/)
+- [Fastify](https://fastify.dev/)
+- [HonoJS](https://hono.dev/)
 
 ### 📥 Exemplo de Uso
 

@@ -9,6 +9,7 @@ import { generateMainFile } from "./generates/generate-main-file.js";
 import {
   generateExpressHttpServerFile,
   generateFastifyHttpServerFile,
+  generateHonoHttpServerFile,
 } from "./generates/generate-http-server-file.js";
 import { generateLoggerFile } from "./generates/generate-logger-file.js";
 import {
@@ -60,7 +61,7 @@ export async function createFiles(projectPath, projectName, options) {
   } else if (options.stack === "fastify") {
     fs.writeFileSync(pathFileHttpServer, generateFastifyHttpServerFile());
   } else {
-    fs.writeFileSync(pathFileHttpServer, generateFastifyHttpServerFile());
+    fs.writeFileSync(pathFileHttpServer, generateHonoHttpServerFile());
   }
 
   fs.writeFileSync(

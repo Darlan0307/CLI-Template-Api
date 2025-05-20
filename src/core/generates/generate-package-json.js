@@ -33,8 +33,8 @@ export function generatePackageJson(projectName, options) {
       dependencies["@fastify/compress"] = "^8.0.1";
       break;
     case "hono":
-      dependencies["hono"] = "";
-      dependencies["@hono/node-server"] = "";
+      dependencies["hono"] = "^4.7.10";
+      dependencies["@hono/node-server"] = "^1.14.2";
       break;
     default:
       break;
