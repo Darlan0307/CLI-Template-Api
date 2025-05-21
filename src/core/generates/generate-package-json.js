@@ -7,13 +7,18 @@ export function generatePackageJson(projectName, options) {
     "tsconfig-paths": "^4.2.0",
     dotenv: "^16.5.0",
     "resolve-tspaths": "^0.8.19",
+    rimraf: "^6.0.1",
   };
 
   const devDependencies = {
     "@types/node": "^22.15.3",
     typescript: "^5.6.3",
-    rimraf: "^6.0.1",
-    "ts-node-dev": "2.0.0",
+    tsx: "^4.19.4",
+  };
+
+  const overrides = {
+    glob: "^9.0.0",
+    inflight: "npm:lru-cache@^7.0.0",
   };
 
   switch (stack) {
@@ -55,7 +60,7 @@ export function generatePackageJson(projectName, options) {
         devDependencies["vite-tsconfig-paths"] = "5.1.4";
         break;
       case "jest":
-        devDependencies["ts-jest"] = "^29.3.2";
+        devDependencies["ts-jest"] = "^29.3.4";
         devDependencies["jest"] = "^29.7.0";
         devDependencies["@types/jest"] = "^29.5.14";
         break;
@@ -77,7 +82,7 @@ export function generatePackageJson(projectName, options) {
 
   const scripts = {
     start: "NODE_ENV=production node -r dotenv/config dist/src/main.js",
-    dev: "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register -r dotenv/config src/main.ts",
+    dev: "tsx watch --clear-screen=false -r tsconfig-paths/register -r dotenv/config src/main.ts",
     build:
       "rimraf dist && tsc --project tsconfig.build.json && resolve-tspaths",
   };
@@ -104,5 +109,6 @@ export function generatePackageJson(projectName, options) {
     license: "MIT",
     dependencies,
     devDependencies,
+    overrides,
   };
 }
