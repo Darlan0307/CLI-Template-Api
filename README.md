@@ -1,4 +1,4 @@
-![Logo do projeto](./banner.png)
+![Logo do projeto](./banner-2.svg)
 
 # 🚀 Api Boilerplate
 
