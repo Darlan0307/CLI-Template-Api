@@ -2,6 +2,8 @@
 
 # 🚀 Api Boilerplate
 
+> You can also read in **[English](./README-en.md)** 🇺🇸
+
 ## 📋 Introdução
 
 Uma ferramenta de linha de comando (CLI) que acelera o desenvolvimento de APIs em Node.js, gerando templates pré-configurados com as melhores práticas. Inclui configurações prontas para linting, TypeScript, testes e arquitetura bem estruturada.
@@ -72,7 +74,7 @@ npx @darlan0307/api-boilerplate minha-api --lint --tests
 
 - **main.ts**: É o ponto de entrada da aplicação, onde as configurações são carregadas, as classes são instanciadas e a API é iniciada.
 - **infra**: Agrupa recursos essenciais ao funcionamento do sistema, mas que não fazem parte do domínio de negócios.
-- **shared**: Reúne classes e funções genéricas, independentes de qualquer modelo específico, que podem ser reutilizadas em diversos pontos da aplicação
+- **shared**: Reúne classes e funções genéricas, independentes de qualquer modelo específico, que podem ser reutilizadas em diversos pontos da aplicação.
 - **@types**: Tipagens globais adicionais de bibliotecas/frameworks como o express, fastify e etc.
 
 ### 🔥 Próximas Funcionalidades
