@@ -33,6 +33,10 @@ npm install -g @darlan0307/api-boilerplate
 api-boilerplate <project-name>
 ```
 
+###### Demonstration
+
+[![Watch the video](https://img.youtube.com/vi/RRv9dDtHyng/3.jpg)](https://www.youtube.com/watch?v=RRv9dDtHyng)
+
 ### ⚙️ Available Options
 
 | Flag          | Description                                                                                                                                                               |
