@@ -1,11 +1,19 @@
 {
   "type": "module",
   "name": "@darlan0307/api-boilerplate",
-  "version": "1.1.4",
+  "version": "2.0.0",
   "description": "CLI para gerar boilerplate de APIs em Node.js",
-  "main": "src/main.js",
+  "main": "dist/main.js",
   "bin": {
-    "api-boilerplate": "src/main.js"
+    "api-boilerplate": "dist/main.js"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "README-en.md"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
   },
   "dependencies": {
     "chalk": "^5.4.1",
@@ -13,9 +21,27 @@
     "inquirer": "^12.6.0",
     "ora": "^8.2.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^25.0.3",
+    "@vitest/coverage-v8": "^4.0.16",
+    "eslint": "^9.39.2",
+    "prettier": "^3.7.4",
+    "rimraf": "^6.1.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.52.0"
+  },
   "scripts": {
-    "dev": "node src/main.js"
+    "dev": "tsx src/main.ts",
+    "build": "rimraf dist && tsc --project tsconfig.build.json",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\" \"tests/**/*.ts\"",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run typecheck && npm run lint && npm run build",
+    "deploy": "npm run prepublishOnly && npm publish"
   },
   "homepage": "https://github.com/Darlan0307/CLI-Template-Api",
   "repository": {

@@ -1,4 +1,4 @@
-export function generateLoggerFile() {
+export function generateLoggerFile(): string {
   return `
   import pino from "pino";
 import pretty from "pino-pretty";

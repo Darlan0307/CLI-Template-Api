@@ -1,5 +1,4 @@
-export function generateMainFile(options) {
-  return `
+
   import { logger } from "@infra/logger";
 import HttpServer from "./http-server";
 
@@ -24,7 +23,7 @@ async function main() {
           logger.info("Existing app with success");
           process.exit(ExitStatus.Success);
         } catch (error) {
-          logger.error(\`App exited with error: \$\{error\}\`);
+          logger.error(`App exited with error: ${error}`);
           process.exit(ExitStatus.Failure);
         }
       })
@@ -32,17 +31,12 @@ async function main() {
 
     const app = await httpServer.createApp();
 
-    ${
-      options.stack === "fastify"
-        ? "app.listen({port},() => logger.info(`Running on port ${port}`));"
-        : "app.listen(port, () => logger.info(`Running on port ${port}`));"
-    }
+    app.listen(port, () => logger.info(`Running on port ${port}`));
   } catch (error) {
-    logger.error(\`App exited with error: \$\{error\}\`);
+    logger.error(`App exited with error: ${error}`);
     process.exit(ExitStatus.Failure);
   }
 }
 
 main();
-  `;
-}
+  

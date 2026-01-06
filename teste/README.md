@@ -1,8 +1,7 @@
-export function generateReadme(projectName) {
-  return `
+
   ![Logo do projeto](https://i.imgur.com/kniMQHu.png)
 
-# ${projectName}
+# teste
 
 Uma breve descrição do projeto aqui.
 
@@ -14,9 +13,9 @@ Coloque aqui as instruções e quais são os objetivos desse projeto, funcionali
 
 Coloque aqui passo a passo que precisa para instalar o projeto e como instalá-lo.
 
-\`\`\`
+```
 Pode inserir exemplos.
-\`\`\`
+```
 
 ### 🔨 Guia de instalação
 
@@ -26,23 +25,23 @@ Etapas para instalar:
 
 Passo 1:
 
-\`\`\`
+```
 Codigo, exemplos
-\`\`\`
+```
 
 Passo 2:
 
-\`\`\`
+```
 Codigo, exemplos
-\`\`\`
+```
 
 ## 🛠️ Executando os testes (caso tenha testes)
 
 Explique como executar os testes automatizados para este sistema.
 
-\`\`\`
+```
 Coloque exemplos
-\`\`\`
+```
 
 ## 📦 Tecnologias usadas:
 
@@ -94,5 +93,4 @@ Resposta 2
 - Para suporte, mande um email para nome@teste.com.
 - Link para o seu linkedin [Meu linkedin](https://www.linkedin.com/in/darlan-martins-8a7956259/)
 
-  `;
-}
+  

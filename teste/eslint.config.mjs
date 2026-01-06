@@ -1,5 +1,3 @@
-export function generateConfigEslint() {
-  return `
 import js from "@eslint/js"
 import globals from "globals"
 import tseslint from "typescript-eslint"
@@ -15,16 +13,3 @@ export default defineConfig([
   { ignores: ["./dist"] },
   tseslint.configs.recommended
 ])
-`;
-}
-
-export function generateConfigPrettier() {
-  return `{
-  "semi": false,
-  "singleQuote": false,
-  "tabWidth": 2,
-  "printWidth": 100,
-  "trailingComma": "none"
-}
-`;
-}

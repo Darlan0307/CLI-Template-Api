@@ -1,4 +1,4 @@
-export function generateExpressHttpServerFile() {
+export function generateExpressHttpServerFile(): string {
   return `
   import express, { Request, Response, Express, Router } from "express";
 import cors from "cors";
@@ -56,7 +56,7 @@ export default class HttpServer {
   `;
 }
 
-export function generateFastifyHttpServerFile() {
+export function generateFastifyHttpServerFile(): string {
   return `
   import fastify, { FastifyInstance, FastifyRequest, FastifyReply } from "fastify"
 import cors from "@fastify/cors"
@@ -110,7 +110,7 @@ export default class HttpServer {
 `;
 }
 
-export function generateHonoHttpServerFile() {
+export function generateHonoHttpServerFile(): string {
   return `
   import { Hono } from "hono"
 import { cors } from "hono/cors"

@@ -1,0 +1,47 @@
+{
+  "name": "teste",
+  "version": "1.0.0",
+  "description": "API gerada com api boilerplate",
+  "main": "dist/src/main.js",
+  "scripts": {
+    "start": "NODE_ENV=production node -r dotenv/config dist/src/main.js",
+    "dev": "tsx watch --clear-screen=false -r tsconfig-paths/register -r dotenv/config src/main.ts",
+    "build": "rimraf dist && tsc --project tsconfig.build.json && resolve-tspaths",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "test:unit": "vitest run --config vitest.unit.config.mjs"
+  },
+  "keywords": [
+    "api",
+    "nodejs"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "pino": "^9.5.0",
+    "pino-pretty": "^13.0.0",
+    "tsconfig-paths": "^4.2.0",
+    "dotenv": "^16.5.0",
+    "resolve-tspaths": "^0.8.19",
+    "rimraf": "^6.0.1",
+    "hono": "^4.7.10",
+    "@hono/node-server": "^1.14.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "typescript": "^5.6.3",
+    "tsx": "^4.19.4",
+    "@eslint/js": "^9.26.0",
+    "eslint": "^9.26.0",
+    "typescript-eslint": "^8.31.1",
+    "globals": "^16.0.0",
+    "prettier": "^3.5.3",
+    "vitest": "3.1.2",
+    "vite-tsconfig-paths": "5.1.4"
+  },
+  "overrides": {
+    "glob": "^9.0.0",
+    "inflight": "npm:lru-cache@^7.0.0"
+  }
+}

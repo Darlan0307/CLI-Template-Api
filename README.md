@@ -94,10 +94,38 @@ Contribuições são muito bem-vindas! Siga os passos abaixo:
 
 1. **Fork** o repositório
 2. **Clone** seu fork localmente
-3. **Crie** uma branch para sua feature: `git checkout -b feature/nova-funcionalidade`
-4. **Commit** suas alterações: `git commit -m 'feat: adiciona nova funcionalidade'`
-5. **Push** para sua branch: `git push origin feature/nova-funcionalidade`
-6. **Abra** um Pull Request explicando suas mudanças
+3. **Instale** as dependências: `npm install`
+4. **Crie** uma branch para sua feature: `git checkout -b feature/nova-funcionalidade`
+5. **Desenvolva** usando: `npm run dev` (executa TypeScript com TSX)
+6. **Verifique** seu código:
+   - `npm run typecheck` - Verifica tipos do TypeScript
+   - `npm run lint` - Executa o linter
+   - `npm run format` - Formata o código
+7. **Build**: `npm run build` para compilar
+8. **Commit** suas alterações: `git commit -m 'feat: adiciona nova funcionalidade'`
+9. **Push** para sua branch: `git push origin feature/nova-funcionalidade`
+10. **Abra** um Pull Request explicando suas mudanças
+
+#### 🛠️ Comandos de Desenvolvimento
+
+```bash
+npm run dev          # Executar CLI em modo desenvolvimento (TSX)
+npm run build        # Compilar TypeScript para JavaScript
+npm run typecheck    # Verificar tipos sem compilar
+npm run lint         # Verificar código com ESLint
+npm run lint:fix     # Corrigir problemas do ESLint automaticamente
+npm run format       # Formatar código com Prettier
+```
+
+#### 📦 Tecnologias Utilizadas no CLI
+
+- **TypeScript** - Linguagem principal
+- **Commander.js** - Framework para CLI
+- **Inquirer.js** - Prompts interativos
+- **Chalk** - Colorização de terminal
+- **Ora** - Spinners de carregamento
+- **Vitest** - Framework de testes
+- **ESLint + Prettier** - Qualidade de código
 
 ### 🐛 Reportando Bugs
 
