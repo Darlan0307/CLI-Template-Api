@@ -80,6 +80,7 @@ import cors from "@fastify/cors"
 import helmet from "@fastify/helmet"
 import compression from "@fastify/compress"
 import { logger } from "@infra/logger"
+import { v1Routes } from "@app/v1"
 
 export default class HttpServer {
   private app: FastifyInstance
@@ -90,7 +91,7 @@ export default class HttpServer {
 
   async createApp(): Promise<FastifyInstance> {
     await this.loadMiddlewares()
-    this.loadRoutes()
+    await this.loadRoutes()
     return this.app
   }
 
@@ -115,13 +116,36 @@ export default class HttpServer {
     // await this.app.register(createAuthMiddleware);
   }
 
-  private loadRoutes(): void {
-    // Rota simples para verificação de saúde
-    this.app.get("/ping", async (request: FastifyRequest, reply: FastifyReply) => {
-      return reply.code(200).send("pong")
+  private async loadRoutes(): Promise<void> {
+    // Rota principal
+    this.app.get("/", async (_request: FastifyRequest, reply: FastifyReply) => {
+      return reply.send({
+        message: "Servidor rodando..."
+      })
     })
 
-    // Criação das rotas da entidade;
+    // Rota de health check
+    this.app.get("/health", async (_request: FastifyRequest, reply: FastifyReply) => {
+      return reply.code(200).send({
+        status: "ok",
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime()
+      })
+    })
+
+    // Registra as rotas versionadas
+    await this.app.register(v1Routes, { prefix: "/api/v1" })
+
+    // Handler 404
+    this.app.setNotFoundHandler((request: FastifyRequest, reply: FastifyReply) => {
+      return reply.code(404).send({
+        error: {
+          code: "ENDPOINT_NOT_FOUND",
+          message: "Endpoint not found",
+          path: request.url
+        }
+      })
+    })
   }
 }
 `;
@@ -134,6 +158,7 @@ import { secureHeaders } from "hono/secure-headers"
 import { compress } from "hono/compress"
 import { logger } from "@infra/logger"
 import { serve } from "@hono/node-server"
+import { v1Routes } from "@app/v1"
 
 type AppResponse = { listen: (port: number, callback: () => void) => void }
 
@@ -178,11 +203,35 @@ export default class HttpServer {
   }
 
   private loadRoutes(): void {
-    this.app.get("/ping", (c) => {
-      return c.text("pong", 200)
+    // Rota principal
+    this.app.get("/", (c) => {
+      return c.json({
+        message: "Servidor rodando..."
+      })
     })
 
-    // Aqui você adicionaria as rotas da entidade
+    // Rota de health check
+    this.app.get("/health", (c) => {
+      return c.json({
+        status: "ok",
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime()
+      }, 200)
+    })
+
+    // Registra as rotas versionadas
+    this.app.route("/api/v1", v1Routes)
+
+    // Handler 404
+    this.app.notFound((c) => {
+      return c.json({
+        error: {
+          code: "ENDPOINT_NOT_FOUND",
+          message: "Endpoint not found",
+          path: c.req.path
+        }
+      }, 404)
+    })
   }
 }
 
