@@ -23,10 +23,10 @@ v1Routes.get("/", (_req, res) => {
   }
 
   if (options.stack === 'fastify') {
-    return `import { FastifyInstance } from "fastify"
+    return `import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify"
 import { userRoutesV1 } from "./example-users/http"
 
-export async function v1Routes(_fastify: FastifyInstance) {
+export async function v1Routes(fastify: FastifyInstance) {
   // Registra todas as rotas da v1
   await fastify.register(userRoutesV1, { prefix: "/users" })
 

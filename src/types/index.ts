@@ -9,9 +9,13 @@ export type StackType = 'express' | 'fastify' | 'hono';
 
 export type TestLibrary = 'vitest' | 'jest' | 'test runner (nativo do NodeJS)';
 
+export type DatabaseType = 'postgres' | 'mysql' | 'mongodb' | false;
+
 export interface ProjectOptions extends CommandOptions {
   stack: StackType;
   typeTest: TestLibrary | false;
+  docker: boolean;
+  database: DatabaseType;
 }
 
 export interface PromptStackResult {
@@ -29,6 +33,15 @@ export interface PromptEslintPrettierResult {
 
 export interface PromptProjectNameResult {
   projectName: string;
+}
+
+export interface PromptDockerResult {
+  enableDocker: boolean;
+}
+
+export interface PromptDatabaseResult {
+  enableDatabase: boolean;
+  database?: DatabaseType;
 }
 
 export interface PackageJsonContent {

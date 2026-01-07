@@ -30,6 +30,10 @@ import {
   generateFileV1HttpIndex,
   generateFileV1HttpRoutes,
 } from './generates/generate-example-version-routes.js';
+import {
+  generateDockerfile,
+  generateDockerCompose,
+} from './generates/generate-docker-files.js';
 
 export function createFiles(
   projectPath: string,
@@ -154,5 +158,17 @@ export function createFiles(
         generateConfigTest(typeTest)
       );
     }
+  }
+
+  if (options.docker) {
+    fs.writeFileSync(
+      path.join(projectPath, 'Dockerfile.dev'),
+      generateDockerfile()
+    );
+
+    fs.writeFileSync(
+      path.join(projectPath, 'docker-compose.yml'),
+      generateDockerCompose(projectName, options.database)
+    );
   }
 }

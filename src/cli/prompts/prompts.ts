@@ -4,7 +4,10 @@ import type {
   PromptStackResult,
   PromptTestOptionsResult,
   PromptEslintPrettierResult,
+  PromptDockerResult,
+  PromptDatabaseResult,
   TestLibrary,
+  DatabaseType,
 } from '../../types/index.js';
 
 export async function promptProjectName(): Promise<string> {
@@ -92,6 +95,49 @@ export async function promptEslintAndPrettier(
   ]);
 
   result.eslintAndPrettier = answers.eslintAndPrettier;
+
+  return result;
+}
+
+export async function promptDocker(): Promise<PromptDockerResult> {
+  const answers = await inquirer.prompt<PromptDockerResult>([
+    {
+      type: 'confirm',
+      name: 'enableDocker',
+      message: 'Você gostaria de usar Docker na sua API?',
+      default: false,
+    },
+  ]);
+
+  return answers;
+}
+
+export async function promptDatabase(): Promise<PromptDatabaseResult> {
+  const result: PromptDatabaseResult = {
+    enableDatabase: false,
+  };
+
+  const enableDatabaseResult = await inquirer.prompt<{ enableDatabase: boolean }>({
+    type: 'confirm',
+    name: 'enableDatabase',
+    message: 'Você gostaria de usar algum banco de dados?',
+    default: false,
+  });
+
+  result.enableDatabase = enableDatabaseResult.enableDatabase;
+
+  if (!result.enableDatabase) {
+    return result;
+  }
+
+  const databaseResult = await inquirer.prompt<{ database: DatabaseType }>({
+    type: 'list',
+    name: 'database',
+    message: 'Qual banco de dados você quer usar?',
+    choices: ['postgres', 'mysql', 'mongodb'],
+  });
+
+  result.database = databaseResult.database;
 
   return result;
 }

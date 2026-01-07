@@ -2,6 +2,7 @@
 import { program } from 'commander';
 import type {
   CommandOptions,
+  DatabaseType,
   ProjectOptions,
   StackType,
   TestLibrary,
@@ -12,6 +13,8 @@ import {
   promptTestOptions,
   promptEslintAndPrettier,
   promptStackProject,
+  promptDocker,
+  promptDatabase,
 } from './cli/prompts/prompts.js';
 import { logger } from './utils/logger.js';
 
@@ -35,12 +38,28 @@ program
 
       const stackName = (await promptStackProject()) as StackType;
 
+      const dockerOptions = await promptDocker();
+
+      let databaseOptions: {
+        enableDatabase: boolean;
+        database?: DatabaseType;
+      } = {
+        enableDatabase: false,
+        database: false,
+      };
+
+      if (dockerOptions.enableDocker) {
+        databaseOptions = await promptDatabase();
+      }
+
       let eslintAndPrettierOption = { eslintAndPrettier: false };
       if (!options.lint) {
         eslintAndPrettierOption = await promptEslintAndPrettier();
       }
 
-      let testOptions: { enableTests: boolean; testLibrary?: TestLibrary } = { enableTests: false };
+      let testOptions: { enableTests: boolean; testLibrary?: TestLibrary } = {
+        enableTests: false,
+      };
       if (!options.tests) {
         testOptions = await promptTestOptions();
       }
@@ -55,11 +74,14 @@ program
           (options.tests
             ? await promptTestOptions(true).then((res) => res.testLibrary!)
             : false),
+        docker: dockerOptions.enableDocker,
+        database: databaseOptions.database || false,
       };
 
       await createProject(projectName, projectOptions);
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
       logger.error(`Erro: ${errorMessage}`);
       process.exit(1);
     }

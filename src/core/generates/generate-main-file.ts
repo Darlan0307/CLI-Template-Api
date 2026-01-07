@@ -37,7 +37,7 @@ async function main() {
 
     ${
       options.stack === 'fastify'
-        ? 'app.listen({port},() => logger.info(`Running on port ${port}`));'
+        ? 'app.listen({port, host: "0.0.0.0"},() => logger.info(`Running on port ${port}`));'
         : 'app.listen(port, () => logger.info(`Running on port ${port}`));'
     }
   } catch (error) {

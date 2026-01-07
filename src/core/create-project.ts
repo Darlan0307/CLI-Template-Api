@@ -50,7 +50,17 @@ export async function createProject(
     logger.infoFolders(`├── src/`);
     logger.infoFolders(`│   ├── @types/`);
     logger.infoFolders(`│   ├── app/`);
+    logger.infoFolders(`│   │   └── v1/`);
+    logger.infoFolders(`│   │       ├── index.ts`);
+    logger.infoFolders(`│   │       └── example-users/`);
+    logger.infoFolders(`│   │           ├── http/`);
+    logger.infoFolders(`│   │           ├── repository/`);
+    logger.infoFolders(`│   │           └── use-cases/`);
     logger.infoFolders(`│   ├── infra/`);
+    logger.infoFolders(`│   │   ├── errors/`);
+    logger.infoFolders(`│   │   ├── middlewares/`);
+    logger.infoFolders(`│   │   ├── env.ts`);
+    logger.infoFolders(`│   │   └── logger.ts`);
     logger.infoFolders(`│   ├── shared/`);
     if (options.tests) {
       logger.infoFolders(`│   ├── tests/`);
@@ -63,6 +73,10 @@ export async function createProject(
     logger.infoFolders(`├── package.json`);
     logger.infoFolders(`├── tsconfig.json`);
     logger.infoFolders(`├── tsconfig.build.json`);
+    if (options.docker) {
+      logger.infoFolders(`├── Dockerfile.dev`);
+      logger.infoFolders(`├── docker-compose.yml`);
+    }
     logger.infoFolders(`└── README.md`);
 
     console.log('\n🚀 Para iniciar o projeto:');
@@ -70,8 +84,17 @@ export async function createProject(
       logger.warn(`cd ${projectName}`);
     }
 
-    logger.warn(`npm install`);
-    logger.warn(`npm run dev`);
+    if (options.docker) {
+      logger.warn(`docker compose up -d`);
+      if (options.database) {
+        logger.info(
+          `\n✓ Banco de dados ${options.database} configurado e será iniciado automaticamente!`
+        );
+      }
+    } else {
+      logger.warn(`npm install`);
+      logger.warn(`npm run dev`);
+    }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     spinner.fail(chalk.red(`Erro ao criar projeto: ${errorMessage}`));
