@@ -1,151 +1,179 @@
 ![Logo do projeto](./banner.png)
 
-# 🚀 Api Boilerplate
+# Api Boilerplate (CLI)
 
-> You can also read in **[English](./README-en.md)** 🇺🇸
+> Você também pode ler em **[Português](./README-pt.md)** 🇧🇷
 
-## 📋 Introdução
+## 📋 Introduction
 
-Uma ferramenta de linha de comando (CLI) que acelera o desenvolvimento de APIs em Node.js, gerando templates pré-configurados com as melhores práticas. Inclui configurações prontas para linting, TypeScript, testes e arquitetura bem estruturada.
+A command-line tool (CLI) that speeds up the development of APIs in Node.js by generating pre-configured templates with best practices. It includes ready-made configurations for docker, documentation, linting, typeScript, testing and a well-structured architecture.
 
-**📦 [Disponível no NPM](https://www.npmjs.com/package/@darlan0307/api-boilerplate)**
+**📦 [Available on NPM](https://www.npmjs.com/package/@darlan0307/api-boilerplate)**
 
-### 🛠️ Frameworks Suportados
+### 🛠️ Supported Frameworks
 
-Escolha entre os principais frameworks do ecossistema Node.js:
+Choose from the main frameworks in the Node.js ecosystem:
 
 - **[Express](https://expressjs.com/)**
 - **[Fastify](https://fastify.dev/)**
 - **[HonoJS](https://hono.dev/)**
 
-### 🚀 Instalação e Uso
+### 🚀 Installation & Use
 
-###### Uso Direto (Recomendado)
+###### Direct Use (Recommended)
 
 ```bash
-npx @darlan0307/api-boilerplate <nome-do-projeto>
+npx @darlan0307/api-boilerplate <project-name>
 ```
 
-###### Instalação Global
+###### Global Installation
 
 ```bash
 npm install -g @darlan0307/api-boilerplate
-api-boilerplate <nome-do-projeto>
+@darlan0307/api-boilerplate <project-name>
 ```
 
-###### Demonstração
+###### Demonstration
 
-[![Assista ao vídeo](https://img.youtube.com/vi/RRv9dDtHyng/3.jpg)](https://www.youtube.com/watch?v=RRv9dDtHyng)
+[![Watch the video](https://img.youtube.com/vi/RRv9dDtHyng/3.jpg)](https://www.youtube.com/watch?v=RRv9dDtHyng)
 
-### ⚙️ Opções Disponíveis
+### ⚙️ Available Options
 
-| Flag          | Descrição                                                                                                                                                                    |
-| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `-f, --force` | Sobrescreve o diretório se já existir                                                                                                                                        |
-| `--lint`      | Configura automaticamente [ESLint](https://eslint.org/) e [Prettier](https://prettier.io/)                                                                                   |
-| `-t, --tests` | Prepara ambiente para testes unitários ([Vitest](https://vitest.dev/), [Jest](https://jestjs.io/pt-BR/) ou [Node Test Runner](https://nodejs.org/api/test.html#test-runner)) |
-| `-r, --root`  | Cria o template na raiz atual (ao invés de criar uma nova pasta)                                                                                                             |
+| Flag                | Description                                                                                                                                                               |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `-f, --force`       | Overwrite the directory if it already exists                                                                                                                              |
+| `-r, --root`        | Creates the template in the current root (instead of creating a new folder)                                                                                               |
+| `--stack <type>`    | Define the framework: `express`, `fastify` or `hono`                                                                                                                      |
+| `--lint`            | Configures automatically [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/)                                                                               |
+| `-t, --tests`       | Prepares environment for unit tests ([Vitest](https://vitest.dev/), [Jest](https://jestjs.io/pt-BR/) or [Node Test Runner](https://nodejs.org/api/test.html#test-runner)) |
+| `--docker`          | Generate [Docker](https://www.docker.com/) configuration (Dockerfile.dev and docker-compose.yml)                                                                          |
+| `--database <type>` | Configure database: `postgres`, `mysql` or `mongodb` (requires --docker)                                                                                                  |
+| `--api-docs`        | Add API documentation with Swagger/OpenAPI                                                                                                                                |
 
-### 💡 Exemplo com Flags
+### 💡 Usage Examples
+
+#### Interactive Mode (with prompts)
 
 ```bash
-npx @darlan0307/api-boilerplate minha-api --lint --tests
+npx @darlan0307/api-boilerplate my-api
 ```
 
-### 🏗️ Arquitetura
+#### Quick Setup with Flags
+
+```bash
+# Complete API with Express, Docker, PostgreSQL and documentation
+npx @darlan0307/api-boilerplate my-api --stack express --docker --database postgres --api-docs --lint --tests
+
+# Simple API with Fastify
+npx @darlan0307/api-boilerplate my-api --stack fastify --lint
+```
+
+### 🏗️ Architecture
 
 ```
-├── src
-│   ├── @types
-│   ├── app
-│   ├── infra
-|   |   ├── errors
-|   |   ├── middlewares
-│   │   └── logger.ts
-│   ├── shared
+my-api/
+├── src/
+│   ├── @types/
+│   ├── app/
+│   │   └── v1/
+│   ├── infra/
+│   │   ├── errors/          # Error handling
+│   │   ├── middlewares/     # Custom middlewares
+│   │   └── logger.ts        # Logging system (Pino)
+│   ├── shared/
+│   │   └── swagger/
 │   ├── http-server.ts
 │   └── main.ts
+├── docs/
+│   └── openapi/
 ├── .env
 ├── .env.example
 ├── .gitignore
-├── app.log
-├── package-lock.json
+├── Dockerfile.dev           # If --docker
+├── docker-compose.yml       # If --docker (with database if specified)
 ├── package.json
 ├── README.md
 ├── tsconfig.build.json
 └── tsconfig.json
 ```
 
-- **main.ts**: É o ponto de entrada da aplicação, onde as configurações são carregadas, as classes são instanciadas e a API é iniciada.
-- **infra**: Agrupa recursos essenciais ao funcionamento do sistema, mas que não fazem parte do domínio de negócios.
-- **shared**: Reúne classes e funções genéricas, independentes de qualquer modelo específico, que podem ser reutilizadas em diversos pontos da aplicação.
-- **@types**: Tipagens globais adicionais de bibliotecas/frameworks como o express, fastify e etc.
+#### 📂 Directory Descriptions
 
-### 🔥 Próximas Funcionalidades
+- **main.ts**: Application entry point where configurations are loaded and the API starts
+- **http-server.ts**: HTTP server configuration
+- **app/v1**: Versioned API routes, facilitating maintenance and evolution
+- **infra**: Essential system resources (logs, errors, middlewares)
+- **shared**: Generic reusable classes and functions throughout the application
+- **shared/swagger**: Swagger/OpenAPI documentation configuration (generated with `--api-docs`)
+- **docs/openapi**: Modular YAML files for documentation (Express only)
+- **@types**: Additional global type definitions for libraries/frameworks
 
-- 🐳 **Containerização** - Configuração Docker
-- 🗄️ **Banco de Dados** - Integração com PostgreSQL, MongoDB e outros
-- ⚡ **Cache** - Implementação de Redis, Memcached ou Node-cache
-- 🔐 **Autenticação** - Templates com JWT e OAuth2
+### ✨ Main Features
 
-### 🤝 Contribuições
+- **3 Supported Frameworks** - Express, Fastify and HonoJS
+- **Route Versioning** - `/api/v1` with scalable structure
+- **API Documentation** - Swagger/OpenAPI configured for each framework
+- **Docker & Docker Compose** - Ready-to-use containerization for development
+- **Databases** - Pre-configured PostgreSQL, MySQL and MongoDB
+- **TypeScript** - Type-safety and autocompletion
+- **Tests** - Support for Vitest, Jest or Node Test Runner
+- **Linting & Formatting** - ESLint + Prettier configured
+- **Logger** - Pino for structured logs
+- **Security** - Helmet, CORS and Compression configured
 
-Contribuições são muito bem-vindas! Siga os passos abaixo:
+### 🔥 Next Features
 
-1. **Fork** o repositório
-2. **Clone** seu fork localmente
-3. **Instale** as dependências: `npm install`
-4. **Crie** uma branch para sua feature: `git checkout -b feature/nova-funcionalidade`
-5. **Desenvolva** usando: `npm run dev` (executa TypeScript com TSX)
-6. **Verifique** seu código:
-   - `npm run typecheck` - Verifica tipos do TypeScript
-   - `npm run lint` - Executa o linter
-   - `npm run format` - Formata o código
-7. **Build**: `npm run build` para compilar
-8. **Commit** suas alterações: `git commit -m 'feat: adiciona nova funcionalidade'`
-9. **Push** para sua branch: `git push origin feature/nova-funcionalidade`
-10. **Abra** um Pull Request explicando suas mudanças
+- **Cache** - Redis implementation
+- **Authentication** - Templates with JWT and OAuth2
+- **ORM/ODM** - Prisma, TypeORM or Mongoose
+- **Notifications** - Templates for email and webhooks
 
-#### 🛠️ Comandos de Desenvolvimento
+### 🤝 Contributions
 
-```bash
-npm run dev          # Executar CLI em modo desenvolvimento (TSX)
-npm run build        # Compilar TypeScript para JavaScript
-npm run typecheck    # Verificar tipos sem compilar
-npm run lint         # Verificar código com ESLint
-npm run lint:fix     # Corrigir problemas do ESLint automaticamente
-npm run format       # Formatar código com Prettier
-```
+Contributions are very welcome! Follow the steps below:
 
-#### 📦 Tecnologias Utilizadas no CLI
+1. **Fork** the repository
+2. **Clone** your fork locally
+3. **Install** dependencies: `npm install`
+4. **Create** a branch for your feature: `git checkout -b feature/new-feature`
+5. **Develop** using: `npm run dev` (runs TypeScript with TSX)
+6. **Check** your code:
+   - `npm run typecheck` - Check TypeScript types
+   - `npm run lint` - Run the linter
+   - `npm run format` - Format code
+7. **Build**: `npm run build` to compile
+8. **Commit** your changes: `git commit -m 'feat: adds new feature'`
+9. **Push** to your branch: `git push origin feature/new-feature`
+10. **Open** a Pull Request explaining your changes
 
-- **TypeScript** - Linguagem principal
-- **Commander.js** - Framework para CLI
-- **Inquirer.js** - Prompts interativos
-- **Chalk** - Colorização de terminal
-- **Ora** - Spinners de carregamento
-- **Vitest** - Framework de testes
-- **ESLint + Prettier** - Qualidade de código
+#### 📦 Technologies Used in CLI
 
-### 🐛 Reportando Bugs
+- **TypeScript** - Main language
+- **Commander.js** - CLI framework
+- **Inquirer.js** - Interactive prompts
+- **Chalk** - Terminal colorization
+- **Ora** - Loading spinners
+- **Vitest** - Testing framework
 
-Encontrou um problema? [Abra uma issue](../../issues) com:
+### 🐛 Reporting Bugs
 
-- Descrição detalhada do erro
-- Passos para reproduzir
-- Ambiente (OS, Node.js version, etc.)
+Found a problem? [Open an Issue](../../issues) with:
 
-### 📄 Licença
+- Detailed error description
+- Steps to reproduce
+- Environment (OS, Node.js version, etc.)
 
-Esse projeto está sob a licença (MIT) - acesse os detalhes [aqui](https://choosealicense.com/licenses/mit/).
+### 📄 License
 
-### 👨‍💻 Autor
+This project is under the (MIT) license - find the details [here](./LICENSE).
+
+### 👨‍💻 Author
 
 **Darlan Martins**
 
 - 💼 [LinkedIn](https://www.linkedin.com/in/darlan-martins-8a7956259/)
-- 📧 [Entre em contato](mailto:darlanchagas2020@gmail.com)
+- 📧 [Contact](mailto:darlanchagas2020@gmail.com)
 
 ---
 
-⭐ **Gostou do projeto?** Dê uma estrela no repositório para apoiar o desenvolvimento!
+⭐ **Liked the project?** Give a star to the repository to support the development!
