@@ -8,7 +8,7 @@ export function generatePackageJson(
   projectName: string,
   options: ProjectOptions
 ): PackageJsonContent {
-  const { lint, tests, typeTest, stack } = options;
+  const { lint, tests, typeTest, stack, apiDocs } = options;
 
   const dependencies: Record<string, string> = {
     pino: '^9.5.0',
@@ -76,6 +76,27 @@ export function generatePackageJson(
         break;
       default:
         devDependencies['ts-node'] = '^10.9.2';
+        break;
+    }
+  }
+
+  if (apiDocs) {
+    switch (stack) {
+      case 'express':
+        dependencies['swagger-ui-express'] = '^5.0.1';
+        dependencies['js-yaml'] = '^4.1.1';
+        devDependencies['@types/swagger-ui-express'] = '^4.1.8';
+        devDependencies['@types/js-yaml'] = '^4.0.9';
+        break;
+      case 'fastify':
+        dependencies['@fastify/swagger'] = '^9.3.0';
+        dependencies['@fastify/swagger-ui'] = '^5.0.1';
+        break;
+      case 'hono':
+        dependencies['@hono/zod-openapi'] = '^1.2.0';
+        dependencies['@hono/swagger-ui'] = '^0.5.2';
+        break;
+      default:
         break;
     }
   }

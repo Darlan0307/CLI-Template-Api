@@ -1,10 +1,10 @@
-export function generateExpressHttpServerFile(): string {
+export function generateExpressHttpServerFile(withDocs = false): string {
   return `import express, { Request, Response, Express } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
 import { logger } from "@infra/logger";
-import { v1Routes } from "@app/v1"
+import { v1Routes } from "@app/v1"${withDocs ? '\nimport { SwaggerConfig } from "@shared/swagger"' : ''}
 
 export default class HttpServer {
   private app: Express;
@@ -46,7 +46,11 @@ export default class HttpServer {
 
     this.app.get("/", async (_req: Request, res: Response) => {
       res.json({
-        message: "Servidor rodando...",
+        message: "Servidor rodando...",${
+          withDocs
+            ? '\n        documentation: {\n          swagger: "/api/docs",\n          v1: "/api/v1/docs",\n        },'
+            : ''
+        }
       })
     })
 
@@ -57,7 +61,7 @@ export default class HttpServer {
         uptime: process.uptime()
       })
     })
-
+${withDocs ? '\n    // Configura a documentação Swagger\n    SwaggerConfig.setup(this.app)\n' : ''}
     this.app.use("/api/v1", v1Routes)
 
     this.app.use((req: Request, res: Response) => {
@@ -74,13 +78,13 @@ export default class HttpServer {
   `;
 }
 
-export function generateFastifyHttpServerFile(): string {
+export function generateFastifyHttpServerFile(withDocs = false): string {
   return `import fastify, { FastifyInstance, FastifyRequest, FastifyReply } from "fastify"
 import cors from "@fastify/cors"
 import helmet from "@fastify/helmet"
 import compression from "@fastify/compress"
 import { logger } from "@infra/logger"
-import { v1Routes } from "@app/v1"
+import { v1Routes } from "@app/v1"${withDocs ? '\nimport { SwaggerConfig } from "@shared/swagger"' : ''}
 
 export default class HttpServer {
   private app: FastifyInstance
@@ -116,11 +120,19 @@ export default class HttpServer {
     // await this.app.register(createAuthMiddleware);
   }
 
-  private async loadRoutes(): Promise<void> {
+  private async loadRoutes(): Promise<void> {${
+    withDocs
+      ? '\n    // Configura a documentação Swagger\n    await SwaggerConfig.setup(this.app)\n'
+      : ''
+  }
     // Rota principal
     this.app.get("/", async (_request: FastifyRequest, reply: FastifyReply) => {
       return reply.send({
-        message: "Servidor rodando..."
+        message: "Servidor rodando..."${
+          withDocs
+            ? ',\n        documentation: {\n          swagger: "/api/docs"\n        }'
+            : ''
+        }
       })
     })
 
@@ -151,14 +163,14 @@ export default class HttpServer {
 `;
 }
 
-export function generateHonoHttpServerFile(): string {
+export function generateHonoHttpServerFile(withDocs = false): string {
   return `import { Hono } from "hono"
 import { cors } from "hono/cors"
 import { secureHeaders } from "hono/secure-headers"
 import { compress } from "hono/compress"
 import { logger } from "@infra/logger"
 import { serve } from "@hono/node-server"
-import { v1Routes } from "@app/v1"
+import { v1Routes } from "@app/v1"${withDocs ? '\nimport { createSwaggerApp } from "@shared/swagger"' : ''}
 
 type AppResponse = { listen: (port: number, callback: () => void) => void }
 
@@ -206,7 +218,11 @@ export default class HttpServer {
     // Rota principal
     this.app.get("/", (c) => {
       return c.json({
-        message: "Servidor rodando..."
+        message: "Servidor rodando..."${
+          withDocs
+            ? ',\n        documentation: {\n          swaggerUi: "/api/docs/ui",\n          swaggerJson: "/api/docs/openapi.json",\n        }'
+            : ''
+        }
       })
     })
 
@@ -218,7 +234,15 @@ export default class HttpServer {
         uptime: process.uptime()
       }, 200)
     })
-
+${
+  withDocs
+    ? `
+    // Configuração da documentação
+    const swaggerApp = createSwaggerApp()
+    this.app.route("/api/docs", swaggerApp)
+`
+    : ''
+}
     // Registra as rotas versionadas
     this.app.route("/api/v1", v1Routes)
 

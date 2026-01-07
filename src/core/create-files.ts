@@ -34,6 +34,14 @@ import {
   generateDockerfile,
   generateDockerCompose,
 } from './generates/generate-docker-files.js';
+import {
+  generateSwaggerConfigForStack,
+  generateOpenAPIV1Index,
+  generateOpenAPIUsersPaths,
+  generateOpenAPIUserSchemas,
+  generateOpenAPICommonSchemas,
+  generateOpenAPICommonResponses,
+} from './generates/generate-api-docs.js';
 
 export function createFiles(
   projectPath: string,
@@ -74,11 +82,20 @@ export function createFiles(
 
   const pathFileHttpServer = path.join(projectPath, 'src', 'http-server.ts');
   if (options.stack === 'express') {
-    fs.writeFileSync(pathFileHttpServer, generateExpressHttpServerFile());
+    fs.writeFileSync(
+      pathFileHttpServer,
+      generateExpressHttpServerFile(options.apiDocs)
+    );
   } else if (options.stack === 'fastify') {
-    fs.writeFileSync(pathFileHttpServer, generateFastifyHttpServerFile());
+    fs.writeFileSync(
+      pathFileHttpServer,
+      generateFastifyHttpServerFile(options.apiDocs)
+    );
   } else {
-    fs.writeFileSync(pathFileHttpServer, generateHonoHttpServerFile());
+    fs.writeFileSync(
+      pathFileHttpServer,
+      generateHonoHttpServerFile(options.apiDocs)
+    );
   }
 
   fs.writeFileSync(
@@ -170,5 +187,48 @@ export function createFiles(
       path.join(projectPath, 'docker-compose.yml'),
       generateDockerCompose(projectName, options.database)
     );
+  }
+
+  if (options.apiDocs) {
+    // Gera o arquivo de configuração do Swagger (src/shared/swagger/index.ts)
+    fs.writeFileSync(
+      path.join(projectPath, 'src', 'shared', 'swagger', 'index.ts'),
+      generateSwaggerConfigForStack(options.stack)
+    );
+
+    // Para Express, gera os arquivos YAML de documentação
+    if (options.stack === 'express') {
+      fs.writeFileSync(
+        path.join(projectPath, 'docs', 'openapi', 'v1', 'index.yaml'),
+        generateOpenAPIV1Index()
+      );
+
+      fs.writeFileSync(
+        path.join(projectPath, 'docs', 'openapi', 'v1', 'paths', 'users.yaml'),
+        generateOpenAPIUsersPaths()
+      );
+
+      fs.writeFileSync(
+        path.join(
+          projectPath,
+          'docs',
+          'openapi',
+          'v1',
+          'schemas',
+          'user.yaml'
+        ),
+        generateOpenAPIUserSchemas()
+      );
+
+      fs.writeFileSync(
+        path.join(projectPath, 'docs', 'openapi', 'common', 'schemas.yaml'),
+        generateOpenAPICommonSchemas()
+      );
+
+      fs.writeFileSync(
+        path.join(projectPath, 'docs', 'openapi', 'common', 'responses.yaml'),
+        generateOpenAPICommonResponses()
+      );
+    }
   }
 }

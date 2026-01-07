@@ -51,28 +51,26 @@ export async function createProject(
     logger.infoFolders(`│   ├── @types/`);
     logger.infoFolders(`│   ├── app/`);
     logger.infoFolders(`│   │   └── v1/`);
-    logger.infoFolders(`│   │       ├── index.ts`);
-    logger.infoFolders(`│   │       └── example-users/`);
-    logger.infoFolders(`│   │           ├── http/`);
-    logger.infoFolders(`│   │           ├── repository/`);
-    logger.infoFolders(`│   │           └── use-cases/`);
     logger.infoFolders(`│   ├── infra/`);
     logger.infoFolders(`│   │   ├── errors/`);
     logger.infoFolders(`│   │   ├── middlewares/`);
-    logger.infoFolders(`│   │   ├── env.ts`);
     logger.infoFolders(`│   │   └── logger.ts`);
     logger.infoFolders(`│   ├── shared/`);
+    if (options.apiDocs) {
+      logger.infoFolders(`│   │   └── swagger/`);
+    }
     if (options.tests) {
       logger.infoFolders(`│   ├── tests/`);
     }
     logger.infoFolders(`│   ├── http-server.ts`);
     logger.infoFolders(`│   └── main.ts`);
+    if (options.apiDocs && options.stack === 'express') {
+      logger.infoFolders(`├── docs/`);
+      logger.infoFolders(`│   └── openapi/`);
+    }
     logger.infoFolders(`├── .env`);
     logger.infoFolders(`├── .env.example`);
-    logger.infoFolders(`├── .gitignore`);
     logger.infoFolders(`├── package.json`);
-    logger.infoFolders(`├── tsconfig.json`);
-    logger.infoFolders(`├── tsconfig.build.json`);
     if (options.docker) {
       logger.infoFolders(`├── Dockerfile.dev`);
       logger.infoFolders(`├── docker-compose.yml`);
@@ -94,6 +92,21 @@ export async function createProject(
     } else {
       logger.warn(`npm install`);
       logger.warn(`npm run dev`);
+    }
+
+    if (options.apiDocs) {
+      logger.info('\n📚 Documentação da API disponível em:');
+      if (options.stack === 'express') {
+        logger.warn(`http://localhost:3000/api/docs`);
+        logger.warn(`http://localhost:3000/api/v1/docs`);
+      } else if (options.stack === 'fastify') {
+        logger.warn(`http://localhost:3000/api/docs`);
+      } else if (options.stack === 'hono') {
+        logger.warn(`http://localhost:3000/api/docs/ui (Swagger UI)`);
+        logger.warn(
+          `http://localhost:3000/api/docs/openapi.json (OpenAPI JSON)`
+        );
+      }
     }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);

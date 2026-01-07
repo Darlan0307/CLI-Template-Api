@@ -3,6 +3,10 @@ export interface CommandOptions {
   root: boolean;
   tests: boolean;
   lint: boolean;
+  docker: boolean;
+  database?: string;
+  apiDocs: boolean;
+  stack?: string;
 }
 
 export type StackType = 'express' | 'fastify' | 'hono';
@@ -11,11 +15,16 @@ export type TestLibrary = 'vitest' | 'jest' | 'test runner (nativo do NodeJS)';
 
 export type DatabaseType = 'postgres' | 'mysql' | 'mongodb' | false;
 
-export interface ProjectOptions extends CommandOptions {
+export interface ProjectOptions {
+  force: boolean;
+  root: boolean;
   stack: StackType;
+  tests: boolean;
+  lint: boolean;
   typeTest: TestLibrary | false;
   docker: boolean;
   database: DatabaseType;
+  apiDocs: boolean;
 }
 
 export interface PromptStackResult {
@@ -42,6 +51,10 @@ export interface PromptDockerResult {
 export interface PromptDatabaseResult {
   enableDatabase: boolean;
   database?: DatabaseType;
+}
+
+export interface PromptApiDocsResult {
+  enableApiDocs: boolean;
 }
 
 export interface PackageJsonContent {

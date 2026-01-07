@@ -6,6 +6,7 @@ import type {
   PromptEslintPrettierResult,
   PromptDockerResult,
   PromptDatabaseResult,
+  PromptApiDocsResult,
   TestLibrary,
   DatabaseType,
 } from '../../types/index.js';
@@ -140,4 +141,17 @@ export async function promptDatabase(): Promise<PromptDatabaseResult> {
   result.database = databaseResult.database;
 
   return result;
+}
+
+export async function promptApiDocs(): Promise<PromptApiDocsResult> {
+  const answers = await inquirer.prompt<PromptApiDocsResult>([
+    {
+      type: 'confirm',
+      name: 'enableApiDocs',
+      message: 'Você gostaria de adicionar documentação de API (Swagger/OpenAPI)?',
+      default: false,
+    },
+  ]);
+
+  return answers;
 }
