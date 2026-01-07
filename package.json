@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@darlan0307/api-boilerplate",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "CLI para gerar boilerplate de APIs em Node.js",
   "main": "dist/main.js",
   "bin": {
@@ -62,5 +62,8 @@
     "template"
   ],
   "author": "Darlan Martins <darlanchagas2020@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
 }
