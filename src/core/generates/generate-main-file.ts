@@ -2,9 +2,9 @@ import type { ProjectOptions } from '../../types/index.js';
 
 /* eslint-disable no-useless-escape */
 export function generateMainFile(options: ProjectOptions): string {
-  return `
-  import { logger } from "@infra/logger";
+  return `import { logger } from "@infra/logger";
 import HttpServer from "./http-server";
+import { env } from "@infra/env";
 
 enum ExitStatus {
   Failure = 1,
@@ -13,7 +13,7 @@ enum ExitStatus {
 
 async function main() {
   try {
-    const PORT = process.env.PORT || 3000;
+    const PORT = env.PORT
     const httpServer = new HttpServer();
     const port = Number(PORT);
     // sinais do sistema operacional que o programa monitorará para saber quando dever parar

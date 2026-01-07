@@ -16,8 +16,7 @@ it('adds 1 + 2 to equal 3', () => {
 })
   `;
   } else if (typeTest === 'jest') {
-    return `
-import { sum } from './sum'
+    return `import { sum } from './sum'
 
 it('adds 1 + 2 to equal 3', () => {
   expect(sum(1, 2)).toBe(3)
@@ -37,8 +36,7 @@ test("adds 1 + 2 to equal 3", () => {
 
 export function generateConfigTest(typeTest: TestLibrary): string {
   return typeTest === 'vitest'
-    ? `
-  import { configDefaults, defineConfig } from 'vitest/config';
+    ? `import { configDefaults, defineConfig } from 'vitest/config';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({

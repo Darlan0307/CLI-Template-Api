@@ -1,4 +1,8 @@
-import type { ProjectOptions, PackageJsonContent, TestLibrary } from '../../types/index.js';
+import type {
+  ProjectOptions,
+  PackageJsonContent,
+  TestLibrary,
+} from '../../types/index.js';
 
 export function generatePackageJson(
   projectName: string,
@@ -13,6 +17,7 @@ export function generatePackageJson(
     dotenv: '^16.5.0',
     'resolve-tspaths': '^0.8.19',
     rimraf: '^6.0.1',
+    zod: '^4.2.1',
   };
 
   const devDependencies: Record<string, string> = {

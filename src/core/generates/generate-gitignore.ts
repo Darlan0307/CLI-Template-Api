@@ -1,6 +1,5 @@
 export function generateGitignore(): string {
-  return `
-# Logs
+  return `# Logs
 logs
 *.log
 npm-debug.log*

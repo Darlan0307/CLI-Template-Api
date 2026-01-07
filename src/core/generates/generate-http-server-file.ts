@@ -1,10 +1,10 @@
 export function generateExpressHttpServerFile(): string {
-  return `
-  import express, { Request, Response, Express, Router } from "express";
+  return `import express, { Request, Response, Express } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
 import { logger } from "@infra/logger";
+import { v1Routes } from "@app/v1"
 
 export default class HttpServer {
   private app: Express;
@@ -43,22 +43,39 @@ export default class HttpServer {
   }
 
   private loadRoutes(): void {
-    this.app.get("/ping", async (req: Request, res: Response) => {
-      res.status(200).send("pong");
-    });
 
-    const router = Router();
-    this.app.use(router);
-    // Criação das rotas
-    // createEntityRoutes(router);
+    this.app.get("/", async (_req: Request, res: Response) => {
+      res.json({
+        message: "Servidor rodando...",
+      })
+    })
+
+    this.app.get("/health", async (_req: Request, res: Response) => {
+      res.status(200).json({
+        status: "ok",
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime()
+      })
+    })
+
+    this.app.use("/api/v1", v1Routes)
+
+    this.app.use((req: Request, res: Response) => {
+      res.status(404).json({
+        error: {
+          code: "ENDPOINT_NOT_FOUND",
+          message: "Endpoint not found",
+          path: req.originalUrl,
+        }
+      })
+    })
   }
 }
   `;
 }
 
 export function generateFastifyHttpServerFile(): string {
-  return `
-  import fastify, { FastifyInstance, FastifyRequest, FastifyReply } from "fastify"
+  return `import fastify, { FastifyInstance, FastifyRequest, FastifyReply } from "fastify"
 import cors from "@fastify/cors"
 import helmet from "@fastify/helmet"
 import compression from "@fastify/compress"
@@ -111,8 +128,7 @@ export default class HttpServer {
 }
 
 export function generateHonoHttpServerFile(): string {
-  return `
-  import { Hono } from "hono"
+  return `import { Hono } from "hono"
 import { cors } from "hono/cors"
 import { secureHeaders } from "hono/secure-headers"
 import { compress } from "hono/compress"

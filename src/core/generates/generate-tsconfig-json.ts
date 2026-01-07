@@ -19,8 +19,7 @@ export function generateTsConfigJson(isBuild: boolean): TsConfigContent {
       strict: true,
       skipLibCheck: true,
       outDir: './dist',
-      rootDir: './',
-      baseUrl: './',
+      rootDir: './src',
       paths: {
         '@app/*': ['./src/app/*'],
         '@infra/*': ['./src/infra/*'],

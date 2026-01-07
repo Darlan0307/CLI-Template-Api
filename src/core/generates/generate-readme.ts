@@ -1,6 +1,5 @@
 export function generateReadme(projectName: string): string {
-  return `
-  ![Logo do projeto](https://i.imgur.com/kniMQHu.png)
+  return `![Logo do projeto](https://i.imgur.com/kniMQHu.png)
 
 # ${projectName}
 

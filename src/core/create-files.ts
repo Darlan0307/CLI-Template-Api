@@ -4,7 +4,10 @@ import type { ProjectOptions, TestLibrary } from '../types/index.js';
 import { generatePackageJson } from './generates/generate-package-json.js';
 import { generateGitignore } from './generates/generate-gitignore.js';
 import { generateReadme } from './generates/generate-readme.js';
-import { generateEnvFile } from './generates/generate-env.js';
+import {
+  generateEnvFile,
+  generateValidationEnvFile,
+} from './generates/generate-env.js';
 import { generateTsConfigJson } from './generates/generate-tsconfig-json.js';
 import { generateMainFile } from './generates/generate-main-file.js';
 import {
@@ -22,6 +25,11 @@ import {
   generateExampleSumTest,
   generateConfigTest,
 } from './generates/generate-example-test-unit.js';
+import {
+  generateFileIndexV1VersionRoutes,
+  generateFileV1HttpIndex,
+  generateFileV1HttpRoutes,
+} from './generates/generate-example-version-routes.js';
 
 export function createFiles(
   projectPath: string,
@@ -72,6 +80,42 @@ export function createFiles(
   fs.writeFileSync(
     path.join(projectPath, 'src', 'main.ts'),
     generateMainFile(options)
+  );
+
+  fs.writeFileSync(
+    path.join(projectPath, 'src', 'app', 'v1', 'index.ts'),
+    generateFileIndexV1VersionRoutes(options)
+  );
+
+  fs.writeFileSync(
+    path.join(
+      projectPath,
+      'src',
+      'app',
+      'v1',
+      'example-users',
+      'http',
+      'routes.ts'
+    ),
+    generateFileV1HttpRoutes(options)
+  );
+
+  fs.writeFileSync(
+    path.join(
+      projectPath,
+      'src',
+      'app',
+      'v1',
+      'example-users',
+      'http',
+      'index.ts'
+    ),
+    generateFileV1HttpIndex()
+  );
+
+  fs.writeFileSync(
+    path.join(projectPath, 'src', 'infra', 'env.ts'),
+    generateValidationEnvFile()
   );
 
   fs.writeFileSync(
