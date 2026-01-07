@@ -30,7 +30,7 @@ npx @darlan0307/api-boilerplate <project-name>
 
 ```bash
 npm install -g @darlan0307/api-boilerplate
-@darlan0307/api-boilerplate <project-name>
+api-boilerplate <project-name>
 ```
 
 ###### Demonstration
